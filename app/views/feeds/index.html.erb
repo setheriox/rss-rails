@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Feeds" %>
+
+<h1>Feeds</h1>
+
+<div id="feeds">
+  <% @feeds.each do |feed| %>
+    <%= render feed %>
+  <% end %>
+</div>
+
+<%= link_to "New feed", new_feed_path %>
