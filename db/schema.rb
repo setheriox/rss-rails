@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_14_160305) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_14_214325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.bigint "feed_id"
+    t.text "title"
+    t.text "description"
+    t.text "url"
+    t.datetime "published"
+    t.boolean "read"
+    t.boolean "starred"
+    t.boolean "filtered"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "feeds", force: :cascade do |t|
     t.string "name"
