@@ -1,0 +1,48 @@
+# This file should ensure the existence of records required to run the application in every environment (production,
+# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
+# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+#
+# Example:
+#
+#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_{ name|
+#     MovieGenre.find_or_create_by!({ name: genre_{ name)
+#   end
+Feed.create([
+    { name: "Slashdot", url: "https://rss.slashdot.org/Slashdot/slashdot" },
+    { name: "TechCrunch", url: "https://techcrunch.com/feed/" },
+    { name: "MyAnimeList", url: "https://myanimelist.net/rss/news.xml" },
+    { name: "ArsTechnica", url: "https://arstechnica.com/information-technology/feed/" },
+    { name: "servethehome", url: "https://www.servethehome.com/feed/" },
+    { name: "Toms Hardware", url: "https://www.tomshardware.com/feeds.xml" },
+    { name: "Science Daily", url: "https://www.sciencedaily.com/rss/top/technology.xml" },
+    { name: "Play Asia", url: "https://play.asia/blog/feed/" },
+    { name: "IGN", url: "https://www.ign.com/rss/v2/articles/feed" },
+    { name: "changelog", url: "https://changelog.com/feed" },
+    { name: "gematsu", url: "https://www.gematsu.com/feed" },
+    { name: "sysadmin", url: "https://www.reddit.com/r/sysadmin.rss" },
+    { name: "programminghumor", url: "https://www.reddit.com/r/programminghumor.rss" },
+    { name: "AnimeCollectors", url: "https://www.reddit.com/r/AnimeCollectors.rss" },
+    { name: "anime", url: "https://www.reddit.com/r/anime.rss" },
+    { name: "Yattatachi", url: "https://yattatachi.com/feed" },
+    { name: "NVIDIA Newsroom", url: "https://nvidianews.nvidia.com/rss.xml" },
+    { name: "Skidrow-Games", url: "https://feeds.feedburner.com/skidrowgamesfeed" },
+    { name: "Limit Break Radio", url: "http://www.limitbreakradio.com/rss.xml" },
+    { name: "hackster.io", url: "https://www.hackster.io/projects?format=atom&sort=recent" },
+    { name: "Limited Run Games", url: "https://limitedrungames.com/blogs/news.atom" },
+    { name: "Anime Corner Store", url: "https://animecornerstore.blogspot.com/feeds/posts/default?alt=rss" },
+    { name: "[GM]Dave", url: "https://bannable-offenses.blogspot.com/feeds/posts/default" },
+    { name: "Microsoft Office Info", url: "https://status.cloud.microsoft/api/feed/mac" },
+    { name: "RSS", url: "http://192.168.1.150:31500/rss" },
+    { name: "Change Detection", url: "https://change.thestoryisover.net/rss?token=d6ae0e7ea3c04e95f0cc5df8f5a8d31e" },
+    { name: "Legal Mindset", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtiec4EBNN3iiNgXHgykm9A" },
+    { name: "DPatriot", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCJPUolPbvMvGWLGhDJcnjJA" },
+    { name: "Dave's Garage", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCNzszbnvQeFzObW0ghk0Ckw" },
+    { name: "Holo Subs EN", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCMfgZuwBxJRhoahep4kRC5w" },
+    { name: "kumanuki", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCYYlQ_kMJ5fV3RxpDd1TALQ" },
+    { name: "Matthew Shezmen", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCB4WnO_ELLYdSBxiFn3Wn1A" },
+    { name: "Corridor Crew", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCSpFnDQr88xCZ80N-X7t0nQ" },
+    { name: "Euro Brady", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UC4ChspfTaiJcoHEs5b8_3IQ" },
+    { name: "Wired", url: "https://www.wired.com/feed" },
+    { name: "Anime News Network", url: "https://www.animenewsnetwork.com/newsfeed/rss.xml" },
+    { name: "The Verge", url: "https://www.theverge.com/rss/full.xml" }
+])

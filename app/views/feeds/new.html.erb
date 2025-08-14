@@ -1,0 +1,11 @@
+<% content_for :title, "New feed" %>
+
+<h1>New feed</h1>
+
+<%= render "form", feed: @feed %>
+
+<br>
+
+<div>
+  <%= link_to "Back to feeds", feeds_path %>
+</div>
