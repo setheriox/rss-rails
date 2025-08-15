@@ -64,3 +64,4 @@ end
 gem 'feedjira'
 gem 'httparty'
 gem 'whenever'
+gem 'nokogiri'

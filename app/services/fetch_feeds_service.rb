@@ -2,12 +2,24 @@ class FetchFeedsService
   require 'open-uri'
 
   def self.call
-filters = Filter.all.to_a
+    filters = Filter.all.to_a
 
     Feed.find_each do |feed|
       fetch_feed(feed, filters)
     end
   end
+
+def self.sanitize_content(content)
+  return content unless content
+
+  doc = Nokogiri::HTML::DocumentFragment.parse(content)
+
+  # NUKE ALL IFRAMES AND EMBEDDED CONTENT
+  doc.css('iframe, embed, object, applet, script').remove
+
+  doc.to_html
+  end
+end
 
   def self.fetch_feed(feed, filters)
     begin
