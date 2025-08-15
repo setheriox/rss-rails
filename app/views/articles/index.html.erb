@@ -1,16 +1,75 @@
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Articles" %>
-
-<h1>Articles</h1>
-
 <div id="articles">
   <% @articles.each do |article| %>
-    <%= render article %>
-    <p>
-      <%= link_to "Show this article", article %>
-    </p>
+    <%#= render article %>
+    <%#= link_to "Show this article", article %>
+    
+    <div class="feed_item">
+      <div class="feed_item_header">
+        <div class="feed_item_name">
+          <%= article.feed.name %>
+        </div>
+        <div class="feed_item_title">
+          <%= article.title %>
+        </div>
+        <div class="feed_item_url">
+          <%= article.url %>
+        </div>
+        <div class="feed_item_published">
+          <%= article.published.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M") %>
+        </div>
+        <div class="feed_item_read">
+          <%= article.read %>
+        </div>
+        <div class="feed_item_starred">
+          <% if article.starred == true %>
+          *
+          <% else %>
+          _
+          <% end %>
+        </div>
+        <div class="feed_item_filtered">
+          <%= article.filtered %>
+        </div>
+      </div>
+      <div class="feed_item_body">
+        <div class="feed_item_description">
+          <%#= article.description %>
+        </div>
+      </div>
+    </div>    
   <% end %>
 </div>
 
-<%= link_to "New article", new_article_path %>
+<%#= link_to "New article", new_article_path %>
+<style>
+.feed_item {
+  max-width: 800px;
+  margin: 2px auto;
+}
+.feed_item_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.feed_item_name {
+}
+.feed_item_title {
+}
+.feed_item_published {
+
+}
+.feed_item_read {
+}
+.feed_item_starred {
+
+}
+.feed_item_url {
+  display: none;
+}
+.feed_item_body {
+  display: none;
+}
+</style>
