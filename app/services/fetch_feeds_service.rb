@@ -13,7 +13,8 @@ class FetchFeedsService
       parsed = Feedjira.parse(xml)
 
       parsed.entries.each do |entry|
-        next if Article.exists?(guid: entry.id) || Article.exists?(url: entry.url)
+        next if Article.exists?(url: entry.url, feed_id: feed.id)
+
 
         Article.create!(
           feed: feed,

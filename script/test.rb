@@ -5,7 +5,7 @@ url = 'https://animecornerstore.blogspot.com/feeds/posts/default?alt=rss'
 begin
   feed = Feedjira.parse(URI.open(url).read)
 
-  puts "Feed title: #{feed.title}"
+  puts "Feed name: #{feed.name}"
   feed.entries.each do |entry|
     puts "Title: #{entry.title}"
     puts "URL: #{entry.url}"
