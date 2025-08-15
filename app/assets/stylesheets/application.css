@@ -128,3 +128,37 @@ a:hover {
 .article_item_description {
     display: none;
 }
+
+
+
+
+.filters_item {
+    display: flex;
+    max-width: 500px;
+    margin: 2px 0; /* removed auto to avoid centering */
+    padding: 6px 4px;
+    background-color: #333;
+    border: 1px solid #000;
+    border-radius: 12px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filters_item_term  {
+    width: 50%;
+    text-align: left;
+}
+.filters_item_title  {
+    width: 10%;
+    text-align: center;
+}
+.filters_item_description {
+    width: 10%;
+    text-align: center;
+}
+.filters_item_show  {
+    width: 30%;
+    text-align: center;
+}
