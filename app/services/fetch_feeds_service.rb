@@ -11,7 +11,7 @@ filters = Filter.all.to_a
 
   def self.fetch_feed(feed, filters)
     begin
-      xml = URI.open(feed.url).read
+      xml = URI.open(feed.url, read_timeout: 10, open_timeout: 5).read
       parsed = Feedjira.parse(xml)
 
       parsed.entries.each do |entry|
@@ -29,7 +29,6 @@ filters = Filter.all.to_a
         )
       end
 
-      feed.update!(last_fetched_at: Time.now)
 
     rescue => e
       Rails.logger.error("Failed to fetch feed #{feed.url}: #{e.message}")
