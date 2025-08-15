@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :articles
+  resources :articles do
+    member do
+      patch :toggle_read
+    end
+  end
   resources :feeds
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
