@@ -29,7 +29,7 @@
         <%= article.feed.name %>
       </div>
 
-      <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>;">
+      <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>; cursor: pointer;">
         <%= article.title %>
       </div>
       <div class="article_item_url">
@@ -43,8 +43,12 @@
       <!-- </div> -->
       </div>
       <div class="article_item_body">
-        <div class="article_item_description">
-          <%= article.description %>
+        <div class="article_item_description" style="display: none;">
+          <%= sanitize(article.description) %>
+          <br />
+          <br />
+          
+          <a href="<%= article.url %>" target="_blank">*Visit Full Article*</a>
         </div>
       </div>
     </div>
@@ -129,6 +133,47 @@
             console.error('Error:', error);
             alert('Network error occurred');
         });
+      });
+    });
+
+    const titleItems = document.querySelectorAll('.article_item_title');
+    titleItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const feedItem = this.closest('.article_item');
+        const descriptionElement = feedItem.querySelector('.article_item_description');
+        const readButton = feedItem.querySelector('.article_item_read');
+
+        // Debug: log current display value
+        console.log('Current display:', descriptionElement.style.display);
+        
+        if (descriptionElement.style.display === 'none' || descriptionElement.style.display === '') {
+          console.log('Setting to block');
+          descriptionElement.style.display = 'block';
+
+          if(readButton.dataset.read === 'false') {
+            const articleId = readButton.dataset.articleId;
+
+            fetch(`/articles/${articleId}/toggle_read`, {
+              method: 'PATCH',
+              headers: {
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+              if(data.success) {
+                updateReadStatus(readButton, this, data);
+              } else {
+                console.log('Error marking article as read: ' + data.errors.join(', '));
+              }
+            })
+            .catch(error => { 
+              console.error('Error:', error); 
+            });
+          }
+        } else {
+          descriptionElement.style.display = 'none';
+        }
       });
     });
   });
