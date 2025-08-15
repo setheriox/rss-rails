@@ -24,23 +24,59 @@ a, a:visited, a:active, a:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 4px 8px;
   
   max-width: 800px;
-  margin: 5px auto;
+  margin: 2px auto;
 }
 
-.feed_name {
-    width: 25%;
-  font-weight: bold;
+.feed_item_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  height: 1rem;
+  overflow: hidden;
+  width: 100%;
 }
 
-.feed_url {
-    width: 65%;
-    text-align: left;
-  
+
+.feed_item_name {  
+  flex: 0 0 100px; /* don't grow, don't shrink, fixed 100px */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.feed_show {
-    width: 15%;
-    text-align: right;
+.feed_item_starred {  
+  flex: 0 0 1rem; /* don't grow, don't shrink, fixed 100px */
+  overflow: hidden;
+  text-overflow: none;
+  white-space: nowrap;
+  text-align: center;
+}
+.feed_item_read {
+  flex: 0 0 1rem; /* don't grow, don't shrink, fixed 100px */
+  overflow: hidden;
+  text-overflow: none;
+  white-space: nowrap;
+  text-align: center;
+}
+.feed_item_title {
+  flex: 1 1 auto; /* grow, shrink, fill available space */
+}
+.feed_item_published {
+  flex: 0 0 7rem; /* don't grow, don't shrink, fixed 100px */
+  overflow: hidden;
+  text-overflow: none;
+  white-space: nowrap;
+  text-align: right;
+
+}
+
+.feed_item_url {
+  display: none;
+}
+.feed_item_body {
+  display: none;
+}
+.feed_item_description {
+  display: none;
 }
