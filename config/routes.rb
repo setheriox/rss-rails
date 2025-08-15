@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :articles do
     member do
       patch :toggle_read
+      patch :toggle_starred
     end
   end
   resources :feeds

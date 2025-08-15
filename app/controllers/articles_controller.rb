@@ -60,43 +60,71 @@ class ArticlesController < ApplicationController
   end
 
 
-    def toggle_read
-      @article = Article.find(params[:id])
-      
-      if @article.read == true
-        @article.read = false
-      else
-        @article.read = true
-      end
-      
-      if @article.save
-        render json: { 
-          success: true, 
-          read: @article.read 
-        }
-      else
-        render json: { 
-          success: false, 
-          errors: @article.errors.full_messages 
-        }
-      end
-    rescue ActiveRecord::RecordNotFound
+  def toggle_read
+    @article = Article.find(params[:id])
+    
+    if @article.read == true
+      @article.read = false
+    else
+      @article.read = true
+    end
+    
+    if @article.save
+      render json: { 
+        success: true, 
+        read: @article.read 
+      }
+    else
       render json: { 
         success: false, 
-        errors: ['Article not found'] 
-      }, status: :not_found
+        errors: @article.errors.full_messages 
+      }
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { 
+      success: false, 
+      errors: ['Article not found'] 
+    }, status: :not_found
+  end
+
+  def toggle_starred
+    @article = Article.find(params[:id])
+    
+    if @article.starred == true
+      @article.starred = false
+    else
+      @article.starred = true
+    end
+    
+    if @article.save
+      render json: { 
+        success: true, 
+        starred: @article.starred 
+      }
+    else
+      render json: { 
+        success: false, 
+        errors: @article.errors.full_messages 
+      }
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { 
+      success: false, 
+      errors: ['Article not found'] 
+    }, status: :not_found
   end
 
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def article_params
-      params.expect(article: [ :feed_id, :title, :description, :url, :published, :read, :starred, :filtered ])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_article
+    @article = Article.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def article_params
+    params.expect(article: [ :feed_id, :title, :description, :url, :published, :read, :starred, :filtered ])
+  end
 end
 
