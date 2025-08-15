@@ -1,0 +1,11 @@
+<% content_for :title, "New filter" %>
+
+<h1>New filter</h1>
+
+<%= render "form", filter: @filter %>
+
+<br>
+
+<div>
+  <%= link_to "Back to filters", filters_path %>
+</div>

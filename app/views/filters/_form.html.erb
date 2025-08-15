@@ -1,0 +1,32 @@
+<%= form_with(model: filter) do |form| %>
+  <% if filter.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(filter.errors.count, "error") %> prohibited this filter from being saved:</h2>
+
+      <ul>
+        <% filter.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :term, style: "display: block" %>
+    <%= form.textarea :term %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.checkbox :title %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.checkbox :description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

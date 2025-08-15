@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :filters
   resources :articles do
     member do
       patch :toggle_read

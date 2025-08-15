@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Filters" %>
+
+<h1>Filters</h1>
+
+<div id="filters">
+  <% @filters.each do |filter| %>
+    <%= render filter %>
+    <p>
+      <%= link_to "Show this filter", filter %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New filter", new_filter_path %>
