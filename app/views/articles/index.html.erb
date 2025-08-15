@@ -2,94 +2,104 @@
 
 <% content_for :title, "Articles" %>
 <div id="articles">
-  <% @articles.each do |article| %>
+    <% @articles.each do |article| %>
     <%#= render article %>
     <%#= link_to "Show this article", article %>
-    
+
     <div class="article_item">
-      <div class="article_item_header">
+        <div class="article_item_header">
 
-        <div class="article_item_starred">
-          <% if article.starred == true %>
-            &#x02B50;
-          <% else %>
-            &#9734;
-          <% end %>
-        </div>
-        <div class="article_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>">
-          <% if article.read == true %>
-            &#x2713; 
-          <% else %>
-            &#x274B;
-          <% end %>
-        </div>
+            <div class="article_item_starred">
+                <% if article.starred == true %>
+                &#x02B50;
+                <% else %>
+                &#9734;
+                <% end %>
+            </div>
+            <div class="article_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>">
+                <% if article.read == true %>
+                &#x2713;
+                <% else %>
+                &#x274B;
+                <% end %>
+            </div>
 
 
-        <div class="article_item_name">
-          <%= article.feed.name %>
-        </div>
+            <div class="article_item_name">
+                <%= article.feed.name %>
+            </div>
 
-        <div class="article_item_title"
-          style="font-weight: <%= article.read ? 'normal' : 'bold' %>;">
-          <%= article.title %>
+            <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>;">
+                <%= article.title %>
+            </div>
+            <div class="article_item_url">
+                <%= article.url %>
+            </div>
+            <div class="article_item_published">
+                <%= article.published.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M") %>
+            </div>
+            <!-- <div class="article_item_filtered"> -->
+            <%#= article.filtered %>
+            <!-- </div> -->
         </div>
-        <div class="article_item_url">
-          <%= article.url %>
+        <div class="article_item_body">
+            <div class="article_item_description">
+                <%= article.description %>
+            </div>
         </div>
-        <div class="article_item_published">
-          <%= article.published.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M") %>
-        </div>
-        <!-- <div class="article_item_filtered"> -->
-          <%#= article.filtered %>
-        <!-- </div> -->
-      </div>
-      <div class="article_item_body">
-        <div class="article_item_description">
-          <%= article.description %>
-        </div>
-      </div>
-    </div>    
-  <% end %>
+    </div>
+    <% end %>
 </div>
 
 <%#= link_to "New article", new_article_path %>
-
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-const readItems = document.querySelectorAll('.article_item_read');
-readItems.forEach(item => {
-item.addEventListener('click', function() {
-const articleId = this.dataset.articleId;
-const feedItem = this.closest('.article_item');
-const titleElement = feedItem.querySelector('.article_item_title');
- 
-fetch(`/articles/${articleId}/toggle_read`, {
-method: 'PATCH',
-headers: {
-'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
- }
- })
- .then(response => response.json())
- .then(data => {
-if (data.success) {
-this.dataset.read = data.read;
-this.innerHTML = data.read ? '&#x2713;' : '&#x274B;';
- 
-// Toggle font-weight based on read status
-if (data.read) {
-titleElement.style.fontWeight = 'normal';
-} else {
-titleElement.style.fontWeight = 'bold';
-}
- } else {
-alert('Error toggling read status: ' + data.errors.join(', '));
- }
- })
- .catch(error => {
-console.error('Error:', error);
-alert('Network error occurred');
- });
- });
- });
-});
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Extract the toggle logic into a reusable function
+    function updateReadStatus(toggleButton, titleElement, data) {
+      toggleButton.dataset.read = data.read;
+      toggleButton.innerHTML = data.read ? '&#x2713;' : '&#x274B;';
+
+      // Toggle read class, commented out due to not updating
+      // on click, but it will update on page reload
+      // titleElement.classList.toggle('read', data.read);
+      // titleElement.classList.toggle('unread', !data.read);
+      // Toggle font-weight based on read status
+
+      // Update on click
+      if (data.read) {
+        titleElement.style.fontWeight = 'normal';
+      } else {
+        titleElement.style.fontWeight = 'bold';
+      }
+    }
+
+    const readItems = document.querySelectorAll('.article_item_read');
+    readItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const articleId = this.dataset.articleId;
+        const feedItem = this.closest('.article_item');
+        const titleElement = feedItem.querySelector('.article_item_title');
+
+        fetch(`/articles/${articleId}/toggle_read`, {
+          method: 'PATCH',
+          headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            updateReadStatus(this, titleElement, data);
+          } else {
+            alert('Error toggling read status: ' + data.errors.join(', '));
+          }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Network error occurred');
+        });
+      });
+    });
+  });
 </script>

@@ -1,105 +1,130 @@
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 9pt;
+    font-size: 11pt;
     background-color: #000;
     color: #fff;
 }
 
-a, a:visited, a:active, a:hover {
-    color: #fff;
+a, 
+a:visited, 
+a:active, 
+a:hover {
+    color: #6bf;
     text-decoration: none;
+    transition: color 0.25s ease;
 }
+a:hover {
+    color: #9cf;
+    text-decoration: underline;
+    font-weight: bold;
+}
+/* ============================================================================= */
+/* LAYOUT                                                                        */
+/* ============================================================================= */
 
 .page_container {
-    max-width: 800px;
-    margin: 5px auto;
+    max-width: 1200px;
+    margin: 4px auto;
+    padding: 8px 16px;
 }
 
-
-/* Navbar */
+/* =============================================================================
+   NAVBAR
+   ============================================================================= */
 
 .navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  background-color: #222;
-  padding: 5px;
-  margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 800px;
-  border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 1200px;
+    margin: 0 auto 16px;
+    padding: 8px 12px;
+    background-color: #111;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
+
 .navbar-item {
-  margin-right: 15px;
-  font-weight: bold;
+    margin-right: 16px;
+    padding: 4px 8px;
+    font-weight: 600;
 }
 
-
-/* Artcle List */
+/* =============================================================================
+   ARTICLE LIST
+   ============================================================================= */
 
 .article_item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  
-  max-width: 800px;
-  margin: 2px auto;
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 2px auto;
+    padding: 6px 4px;
+    background-color: #333;
+    border: 1px solid #000;
+    border-radius: 12px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
 }
 
 .article_item_header {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  height: 1rem;
-  overflow: hidden;
-  width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: 1rem;
+    overflow: hidden;
 }
 
-
+/* =============================================================================
+   ARTICLE ITEM COMPONENTS
+   ============================================================================= */
 
 .article_item_name {  
-  flex: 0 0 100px; /* don't grow, don't shrink, fixed 100px */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    flex: 0 0 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-.article_item_starred {  
-  flex: 0 0 1rem; /* don't grow, don't shrink, fixed 100px */
-  overflow: hidden;
-  text-overflow: none;
-  white-space: nowrap;
-  text-align: center;
-}
-.article_item_read {
-  flex: 0 0 1rem; /* don't grow, don't shrink, fixed 100px */
-  overflow: hidden;
-  text-overflow: none;
-  white-space: nowrap;
-  text-align: center;
-}
-.article_item_title {
-  flex: 1 1 auto; /* grow, shrink, fill available space */
-}
-.article_item_published {
-  flex: 0 0 7rem; /* don't grow, don't shrink, fixed 100px */
-  overflow: hidden;
-  text-overflow: none;
-  white-space: nowrap;
-  text-align: right;
 
+.article_item_starred,
+.article_item_read {  
+    flex: 0 0 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
 }
-.article_item_url {
-  display: none;
+
+.article_item_title {
+    flex: 1 1 auto;
 }
-.article_item_body {
-  display: none;
+
+.article_item_title.read {
+    font-weight: normal;
 }
+
+.article_item_title.unread {
+    font-weight: bold;
+}
+
+.article_item_published {
+    flex: 0 0 8rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Hidden elements */
+.article_item_url,
+.article_item_body,
 .article_item_description {
-  display: none;
+    display: none;
 }
