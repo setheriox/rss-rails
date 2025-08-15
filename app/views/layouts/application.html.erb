@@ -24,6 +24,14 @@
 
   <body>
     <div class="page_container">
+    <div class="navbar">
+    <div class="navbar-item">
+      <%= link_to "Feeds", feeds_path %>
+    </div>
+    <div class="navbar-item">
+      <%= link_to "Articles", articles_path %>
+    </div>
+    </div>
       <%= yield %>
     </div>
   </body>

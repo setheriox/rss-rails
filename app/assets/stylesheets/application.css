@@ -20,7 +20,30 @@ a, a:visited, a:active, a:hover {
     margin: 5px auto;
 }
 
-.feed_item {
+
+/* Navbar */
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  background-color: #222;
+  padding: 5px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+  border-radius: 5px;
+}
+.navbar-item {
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+
+/* Artcle List */
+
+.article_item {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,7 +52,7 @@ a, a:visited, a:active, a:hover {
   margin: 2px auto;
 }
 
-.feed_item_header {
+.article_item_header {
   display: flex;
   flex-direction: row;
   justify-content: left;
@@ -39,30 +62,31 @@ a, a:visited, a:active, a:hover {
 }
 
 
-.feed_item_name {  
+
+.article_item_name {  
   flex: 0 0 100px; /* don't grow, don't shrink, fixed 100px */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.feed_item_starred {  
+.article_item_starred {  
   flex: 0 0 1rem; /* don't grow, don't shrink, fixed 100px */
   overflow: hidden;
   text-overflow: none;
   white-space: nowrap;
   text-align: center;
 }
-.feed_item_read {
+.article_item_read {
   flex: 0 0 1rem; /* don't grow, don't shrink, fixed 100px */
   overflow: hidden;
   text-overflow: none;
   white-space: nowrap;
   text-align: center;
 }
-.feed_item_title {
+.article_item_title {
   flex: 1 1 auto; /* grow, shrink, fill available space */
 }
-.feed_item_published {
+.article_item_published {
   flex: 0 0 7rem; /* don't grow, don't shrink, fixed 100px */
   overflow: hidden;
   text-overflow: none;
@@ -70,12 +94,12 @@ a, a:visited, a:active, a:hover {
   text-align: right;
 
 }
-.feed_item_url {
+.article_item_url {
   display: none;
 }
-.feed_item_body {
+.article_item_body {
   display: none;
 }
-.feed_item_description {
+.article_item_description {
   display: none;
 }
