@@ -38,3 +38,32 @@ Feed.create([
     { name: "Anime News Network", url: "https://www.animenewsnetwork.com/newsfeed/rss.xml" },
     { name: "The Verge", url: "https://www.theverge.com/rss/full.xml" }
 ])
+Filter.create!([
+  { term: "promo", title: true, description: false },
+  { term: "coupon", title: true, description: false },
+  { term: "codes*025", title: true, description: false },
+  { term: "best deals today", title: true, description: false },
+  { term: "best*202", title: true, description: false },
+  { term: "last of us", title: true, description: false },
+  { term: "deals save", title: true, description: false },
+  { term: "save deals", title: true, description: false },
+  { term: "best deals", title: true, description: false },
+  { term: "best add", title: true, description: false },
+  { term: "Combinator", title: true, description: false },
+  { term: "how to choose", title: true, description: false },
+  { term: "ways to upgrade", title: true, description: false },
+  { term: "1*Best", title: true, description: false },
+  { term: "you can buy", title: true, description: false },
+  { term: "save*$", title: true, description: false },
+  { term: "discount", title: true, description: false },
+  { term: "cheap", title: true, description: false },
+  { term: "All Stage 2025", title: true, description: false },
+  { term: "202*Review", title: true, description: false },
+  { term: "trouble flying", title: true, description: false },
+  { term: "Prime Day", title: true, description: false },
+  { term: "save off", title: true, description: false },
+  { term: "best buy", title: true, description: false },
+  { term: "Tested Reviewed", title: true, description: false },
+  { term: "$*off", title: true, description: false },
+  { term: "#shorts", title: true, description: false }
+])

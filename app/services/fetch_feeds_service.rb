@@ -16,8 +16,8 @@ filters = Filter.all.to_a
 
       parsed.entries.each do |entry|
         next if Article.exists?(url: entry.url, feed_id: feed.id)
-        
-        filtered_flag = matches_filter?(entry, filters)
+
+        matching_filter = matching_filter(entry, filters)
 
         Article.create!(
           feed: feed,
@@ -25,7 +25,8 @@ filters = Filter.all.to_a
           description: entry.summary || entry.content,
           url: entry.url,
           published: entry.published || Time.now,
-          filtered: filtered_flag
+          filtered: matching_filter.present?,
+          filter: matching_filter
         )
       end
 
@@ -35,13 +36,15 @@ filters = Filter.all.to_a
     end
   end
 
-  def self.matches_filter?(entry, filters)
-    filters.any? do |filter|
-      term = filter.term.to_s.downcase
-
-      title_match = filter.title && entry.title.to_s.downcase.include?(term)
-      description_match = filter.description && (entry.summary.to_s.downcase.include?(term) || entry.content.to_s.downcase.include?(term))
+  def self.matching_filter(entry, filters)
+    filters.find do |filter|
+      title_match = filter.title && entry.title.to_s.match?(filter.regex)
+      description_match = filter.description &&
+                          (entry.summary.to_s.match?(filter.regex) ||
+                          entry.content.to_s.match?(filter.regex))
       title_match || description_match
     end
   end
+
+
 end

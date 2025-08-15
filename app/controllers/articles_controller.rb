@@ -5,7 +5,10 @@ class ArticlesController < ApplicationController
   def index
     # @articles = Article.all
     # @articles = Article.limit(20).order(published: :desc)
-    @articles = Article.includes(:feed).limit(20).order(published: :desc) 
+    @articles = Article.includes(:feed)
+                       .where(filtered: false)
+                       .order(published: :desc, id: :desc) 
+                       .limit(20)
   end
 
   # GET /articles/1 or /articles/1.json
