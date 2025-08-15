@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
   def index
     # @articles = Article.all
     # @articles = Article.limit(20).order(published: :desc)
-    @articles = Article.includes(:feed).limit(20)
+    @articles = Article.includes(:feed).limit(20).order(published: :desc) 
   end
 
   # GET /articles/1 or /articles/1.json
@@ -59,6 +59,35 @@ class ArticlesController < ApplicationController
     end
   end
 
+
+    def toggle_read
+      @article = Article.find(params[:id])
+      
+      if @article.read == true
+        @article.read = false
+      else
+        @article.read = true
+      end
+      
+      if @article.save
+        render json: { 
+          success: true, 
+          read: @article.read 
+        }
+      else
+        render json: { 
+          success: false, 
+          errors: @article.errors.full_messages 
+        }
+      end
+    rescue ActiveRecord::RecordNotFound
+      render json: { 
+        success: false, 
+        errors: ['Article not found'] 
+      }, status: :not_found
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
@@ -70,3 +99,4 @@ class ArticlesController < ApplicationController
       params.expect(article: [ :feed_id, :title, :description, :url, :published, :read, :starred, :filtered ])
     end
 end
+

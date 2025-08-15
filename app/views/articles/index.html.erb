@@ -16,9 +16,7 @@
             &#9734;
           <% end %>
         </div>
-
-
-        <div class="feed_item_read">
+        <div class="feed_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>">
           <% if article.read == true %>
             &#x2713; 
           <% else %>
@@ -31,7 +29,8 @@
           <%= article.feed.name %>
         </div>
 
-        <div class="feed_item_title">
+        <div class="feed_item_title"
+          style="font-weight: <%= article.read ? 'normal' : 'bold' %>;">
           <%= article.title %>
         </div>
         <div class="feed_item_url">
@@ -54,3 +53,43 @@
 </div>
 
 <%#= link_to "New article", new_article_path %>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+const readItems = document.querySelectorAll('.feed_item_read');
+readItems.forEach(item => {
+item.addEventListener('click', function() {
+const articleId = this.dataset.articleId;
+const feedItem = this.closest('.feed_item');
+const titleElement = feedItem.querySelector('.feed_item_title');
+ 
+fetch(`/articles/${articleId}/toggle_read`, {
+method: 'PATCH',
+headers: {
+'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+ }
+ })
+ .then(response => response.json())
+ .then(data => {
+if (data.success) {
+this.dataset.read = data.read;
+this.innerHTML = data.read ? '&#x2713;' : '&#x274B;';
+ 
+// Toggle font-weight based on read status
+if (data.read) {
+titleElement.style.fontWeight = 'normal';
+} else {
+titleElement.style.fontWeight = 'bold';
+}
+ } else {
+alert('Error toggling read status: ' + data.errors.join(', '));
+ }
+ })
+ .catch(error => {
+console.error('Error:', error);
+alert('Network error occurred');
+ });
+ });
+ });
+});
+</script>
