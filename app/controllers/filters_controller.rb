@@ -8,6 +8,8 @@ class FiltersController < ApplicationController
 
   # GET /filters/1 or /filters/1.json
   def show
+    # Get all articles that have been filtered out
+    @filtered_articles = @filter.articles.order(published: :desc,id: :desc)
   end
 
   # GET /filters/new

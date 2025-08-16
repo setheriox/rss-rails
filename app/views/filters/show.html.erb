@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @filter %>
+<%#= render @filter %>
 
 <div>
   <%= link_to "Edit this filter", edit_filter_path(@filter) %> |
@@ -8,3 +8,54 @@
 
   <%= button_to "Destroy this filter", @filter, method: :delete %>
 </div>
+
+<div class="filters_show_all">
+<table border="1">
+  <% @filtered_articles.each do |article| %>
+    <tr>
+      <td><div class="filters_show_articles_feed_name"><%= article.feed.name %></div></td>
+      <td><div class="filters_show_article_title"><%= article.title %></div></td>
+      <td><div class="filters_show_article_published"><%= article.published.in_time_zone("Eastern Time (US & Canada)") %></div></td>
+    </tr>
+  <% end %>
+</table>
+</div>
+
+<style>
+.filters_show_all {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.filters_show_all table {
+  border-collapse: collapse;
+}
+.filters_show_all td {
+  padding: 2px 4px;
+ }
+.filters_show_all {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.filters_show_article {
+  border-radius: 12px;
+  background-color: #333;
+  color: #fff;
+  padding: 3px 6px;
+}
+.filters_show_articles_feed_name,
+.filters_show_article_published {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+    height: 1rem;  
+}
+.filters_show_article_title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 500px;
+    height: 1rem;
+}
+</style>
