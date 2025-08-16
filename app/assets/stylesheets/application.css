@@ -1,3 +1,37 @@
+:root {
+    --background: #0a0a0a;
+    --surface: #1a1a1a;
+    --primary: #3b82f6;
+    --secondary: #64748b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --link-primary: #3b82f6;
+    --accent: #10b981;
+    --error: #ef4444;
+    --success: #22c55e;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --transition: 0.2s ease-in-out;    
+    --highlight-blue: rgba(0, 127, 195, 0.5);
+    --font-size-xs: 8pt;
+    --font-size-s: 9pt;
+    --font-size: 10pt;
+    --font-size-l:11pt;
+    --font-size-xl: 12pt;
+
+    --font-family: Verdana, Geneva, sans-serif;
+
+    --h1-size: 20pt;
+    --h2-size: 15pt;
+    --h3-size: 12.5pt;
+
+    --entry-height: 32px;
+    --entry-padding: 4px 8px;
+    --entry-gap: 8px;
+    --entry-margin: 2px 0;
+}
+
+
 /* =============================================================================
    BASE STYLES
    ============================================================================= */
@@ -9,8 +43,8 @@
 }
 
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 11pt;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
     background-color: #000;
     color: #fff;
 }
@@ -70,32 +104,54 @@ a:hover {
 }
 
 .article_item_header {
-    display: flex;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 25px 25px 120px 1fr 120px 40px;
+    gap: var(--entry-gap);
+    height: var(--entry-height);
+    /*
+    min-height: 40px;
+    max-height: 40px;
+    */
     align-items: center;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 1px solid #333;
-    border-radius: 4px;
-    padding: 4px 10px;
-    margin-bottom: 1px;
-    transition: all 0.2s ease;
-    gap: 20px;
-    height: 1.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    margin: var(--entry-margin);
+    transition: var(--transition);
+    padding: var(--entry-padding);
+    background: var(--surface);
+    cursor: pointer;
+    overflow: hidden;
 }
-
+/*
 .article_item_header.selected ,
 .article_item_header:hover {
   background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
   border-color: #555;
 }
+  */
 /* =============================================================================
    ARTICLE ITEM COMPONENTS
    ============================================================================= */
-
-.article_item_name {  
-    flex: 0 0 100px;
+.article_item_header.unread {
+  background-color: var(--highlight-blue) !important;
+}
+.article_item_name {
+    background: var(--accent);
+    color: #000;
+    text-align: center;
+    border-radius: var(--border-radius);
+    padding: var(--entry-padding);
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .article_item_starred,
@@ -107,7 +163,6 @@ a:hover {
 }
 
 .article_item_title {
-    flex: 1 1 auto;
     height: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -135,20 +190,18 @@ a:hover {
 }
 .article_item_description {
     display: none;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #333;
-    top: -2px;
-    position: relative;
-    padding: 12px;
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
+    margin: -3px auto 10px auto;
+    width: 90%;
+    min-width: 200px;
+    background: var(--surface);
+    padding: var(--entry-padding);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-top: none;
-    font-size: 10pt;
-
-  background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    box-shadow: var(--shadow);
+    font-size: var(--font-size-s);
 }
+/* Define the keyframe animation */
 
 
 
@@ -186,4 +239,113 @@ a:hover {
 .filters_item_show  {
     width: 30%;
     text-align: center;
+}
+
+
+
+/* =============================================================================
+   MOBILE RESPONSIVE STYLES
+   ============================================================================= */
+@media screen and (max-width: 768px) {
+  
+  :root {
+    --entry-height: 40px;
+    --entry-padding: 6px 4px;
+    --entry-gap: 4px;
+    --entry-margin: 4px 0;
+    --font-size: 11pt;
+    --font-size-s: 10pt;
+  }
+
+  .page_container {
+    margin: 2px;
+    padding: 4px 8px;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    margin: 0 auto 12px;
+    padding: 6px 8px;
+  }
+
+  .navbar-item {
+    margin-right: 12px;
+    margin-bottom: 4px;
+    font-size: var(--font-size-s);
+  }
+
+  .article_item {
+    max-width: 100%;
+    margin: 4px 0;
+  }
+.article_item_header {
+    grid-template-columns: 40px 40px 1fr 80px;
+    grid-template-rows: auto auto;
+    /* grid template arranges how it will be formatted */
+    /* name name title published - works for now, need to revist */
+    grid-template-areas: 
+      "name name title published"
+      "starred read title published";
+    height: auto;
+    min-height: var(--entry-height);
+    padding: var(--entry-padding);
+    gap: var(--entry-gap);
+  }
+
+  .article_item_starred { grid-area: starred; }
+  .article_item_read { grid-area: read; }
+  .article_item_name { 
+    grid-area: name;
+    font-size: var(--font-size-xs);
+    padding: 2px 4px;
+    height: 20px;
+    margin-top: 2px; 
+  }
+  .article_item_title { 
+    grid-area: title;
+    font-size: var(--font-size-s);
+    line-height: 1.2;
+    overflow: hidden;
+    white-space: normal;
+    height: 2rem;
+  }
+  .article_item_published { 
+    grid-area: published;
+    font-size: var(--font-size-xs);
+    text-align: center;
+    overflow: auto;
+    white-space: wrap;
+  }
+  
+
+  .article_item_published { 
+    grid-area: published;
+    font-size: var(--font-size-xs);
+    text-align: center;
+    overflow: auto;
+    white-space: wrap;
+  }
+
+  .article_item_description {
+    width: 95%;
+    margin: -2px auto 8px auto;
+    font-size: var(--font-size-s);
+    padding: 8px;
+  }
+  .filters_item {
+    max-width: 100%;
+    flex-direction: column;
+    padding: 8px;
+    margin: 4px 0;
+  }
+
+  .filters_item_term,
+  .filters_item_title,
+  .filters_item_description,
+  .filters_item_show {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 4px;
+    padding: 2px 0;
+  }
 }

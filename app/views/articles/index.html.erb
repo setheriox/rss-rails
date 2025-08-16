@@ -5,9 +5,13 @@
   <% @articles.each do |article| %>
   <%#= render article %>
   <%#= link_to "Show this article", article %>
-
   <div class="article_item">
-    <div class="article_item_header">
+
+    <% if article.read == true %>
+      <div class="article_item_header" data-article-id="<%= article.id %>" >
+    <% else %>
+      <div class="article_item_header unread" data-article-id="<%= article.id %>" >
+    <% end %>
 
       <div class="article_item_starred" style="cursor: pointer;" data-article-id="<%= article.id %>" data-starred="<%= article.starred %>">
         <% if article.starred == true %>
@@ -18,9 +22,9 @@
       </div>
       <div class="article_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>">
         <% if article.read == true %>
-          &#x2713;
+          ✓
         <% else %>
-          &#x274B;
+          ◯ 
         <% end %>
       </div>
 
@@ -59,25 +63,29 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     function updateStar(toggleButton, titleElement, data) {
+
+      console.log("Click! Starred Change State: " + data.starred)
       toggleButton.dataset.starred = data.starred;  // Fixed: star -> starred
       toggleButton.innerHTML = data.starred ? '&#x2B50;' : '&#9734;';  // Fixed: starredd -> starred
     }
     // Extract the toggle logic into a reusable function
     function updateReadStatus(toggleButton, titleElement, data) {
       toggleButton.dataset.read = data.read;
-      toggleButton.innerHTML = data.read ? '&#x2713;' : '&#x274B;';
+      toggleButton.innerHTML = data.read ? '✓' : '◯';
 
       // Toggle read class, commented out due to not updating
       // on click, but it will update on page reload
       // titleElement.classList.toggle('read', data.read);
       // titleElement.classList.toggle('unread', !data.read);
       // Toggle font-weight based on read status
-
+      const itemHeaderElement = toggleButton.closest('.article_item_header');
       // Update on click
       if (data.read) {
         titleElement.style.fontWeight = 'normal';
+        itemHeaderElement.classList.remove('unread');
       } else {
         titleElement.style.fontWeight = 'bold';
+        itemHeaderElement.classList.add('unread');
       }
     }
     
@@ -142,6 +150,7 @@
         const feedItem = this.closest('.article_item');
         const descriptionElement = feedItem.querySelector('.article_item_description');
         const readButton = feedItem.querySelector('.article_item_read');
+        const itemHeaderElement = feedItem.querySelector('.article_item_header');
 
         // Debug: log current display value
         console.log('Current display:', descriptionElement.style.display);
