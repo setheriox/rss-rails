@@ -9,26 +9,34 @@ class FetchFeedsService
     end
   end
 
-def self.sanitize_content(content)
-  return content unless content
+  def self.sanitize_content(content)
+    return content unless content
 
-  doc = Nokogiri::HTML::DocumentFragment.parse(content)
+    doc = Nokogiri::HTML::DocumentFragment.parse(content)
 
-  # NUKE ALL IFRAMES AND EMBEDDED CONTENT
-  doc.css('iframe, embed, object, applet, script').remove
+    # NUKE ALL IFRAMES AND EMBEDDED CONTENT
+    doc.css('iframe, embed, object, applet, script').remove
 
-  doc.to_html
+    doc.to_html
   end
-end
-
+  
   def self.fetch_feed(feed, filters)
     begin
       xml = URI.open(feed.url, read_timeout: 10, open_timeout: 5).read
       parsed = Feedjira.parse(xml)
 
       parsed.entries.each do |entry|
-        next if Article.exists?(url: entry.url, feed_id: feed.id)
 
+        if Article.exists?(url: entry.url, feed_id: feed.id)
+          #puts "Duplicate Entry - Skipping: #{feed.name[0,24]} \t #{entry.title[0,24]} \t #{entry.published || Time.now}"
+
+          feed_name = feed.name[0,12]
+          title = entry.title[0,40]
+          published = entry.published.in_time_zone("Eastern Time (US & Canada)")  
+          printf "Duplicate Entry - Skipping: %-16s %-44s %s\n", feed_name, title, published
+
+          next
+        end
         matching_filter = matching_filter(entry, filters)
 
         Article.create!(
@@ -40,8 +48,9 @@ end
           filtered: matching_filter.present?,
           filter: matching_filter
         )
-      end
 
+        puts "Added: #{feed.name} - #{entry.title} - #{entry.published || Time.now}"
+      end
 
     rescue => e
       Rails.logger.error("Failed to fetch feed #{feed.url}: #{e.message}")
@@ -57,6 +66,4 @@ end
       title_match || description_match
     end
   end
-
-
 end
