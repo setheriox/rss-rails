@@ -201,10 +201,56 @@ a:hover {
     box-shadow: var(--shadow);
     font-size: var(--font-size-s);
 }
-/* Define the keyframe animation */
 
 
+/* =============================================================================
+   Pagination COMPONENTS
+   ============================================================================= */
 
+.pagination-container {
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--entry-gap);
+  margin: var(--entry-margin);
+}
+
+.pagination a,
+.pagination .current,
+.pagination .gap {
+  padding: var(--entry-padding);
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.pagination a:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.pagination .current {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  font-weight: bold;
+}
+
+.pagination .gap {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+}
 
 /* =============================================================================
    FILTER ITEM COMPONENTS

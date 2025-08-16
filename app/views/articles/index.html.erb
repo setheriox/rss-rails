@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Articles" %>
-<div id="articles">
+<div id="articles" data-controller="articles">
   <% @articles.each do |article| %>
   <%#= render article %>
   <%#= link_to "Show this article", article %>
@@ -13,14 +13,14 @@
       <div class="article_item_header unread" data-article-id="<%= article.id %>" >
     <% end %>
 
-      <div class="article_item_starred" style="cursor: pointer;" data-article-id="<%= article.id %>" data-starred="<%= article.starred %>">
+      <div class="article_item_starred" style="cursor: pointer;" data-article-id="<%= article.id %>" data-starred="<%= article.starred %>" data-action="click->articles#toggleStar">
         <% if article.starred == true %>
           &#x02B50;
         <% else %>
           &#9734;
         <% end %>
       </div>
-      <div class="article_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>">
+      <div class="article_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>" data-action="click->articles#toggleRead">
         <% if article.read == true %>
           ✓
         <% else %>
@@ -33,7 +33,7 @@
         <%= article.feed.name %>
       </div>
 
-      <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>; cursor: pointer;">
+      <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>; cursor: pointer;" data-action="click->articles#showDescription">
         <%= article.title %>
       </div>
       <div class="article_item_url">
@@ -57,133 +57,9 @@
       </div>
     </div>
   <% end %>
+  <div class="pagination-container">
+  <%= paginate @articles %>
+</div>
 </div>
 
 <%#= link_to "New article", new_article_path %>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    function updateStar(toggleButton, titleElement, data) {
-
-      console.log("Click! Starred Change State: " + data.starred)
-      toggleButton.dataset.starred = data.starred;  // Fixed: star -> starred
-      toggleButton.innerHTML = data.starred ? '&#x2B50;' : '&#9734;';  // Fixed: starredd -> starred
-    }
-    // Extract the toggle logic into a reusable function
-    function updateReadStatus(toggleButton, titleElement, data) {
-      toggleButton.dataset.read = data.read;
-      toggleButton.innerHTML = data.read ? '✓' : '◯';
-
-      // Toggle read class, commented out due to not updating
-      // on click, but it will update on page reload
-      // titleElement.classList.toggle('read', data.read);
-      // titleElement.classList.toggle('unread', !data.read);
-      // Toggle font-weight based on read status
-      const itemHeaderElement = toggleButton.closest('.article_item_header');
-      // Update on click
-      if (data.read) {
-        titleElement.style.fontWeight = 'normal';
-        itemHeaderElement.classList.remove('unread');
-      } else {
-        titleElement.style.fontWeight = 'bold';
-        itemHeaderElement.classList.add('unread');
-      }
-    }
-    
-    const starItems = document.querySelectorAll('.article_item_starred');
-    starItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const articleId = this.dataset.articleId;
-        const feedItem = this.closest('.article_item');
-        const titleElement = feedItem.querySelector('.article_item_title');
-
-        fetch(`/articles/${articleId}/toggle_starred`, { 
-          method: 'PATCH',
-          headers: {  
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          if(data.success) {
-            updateStar(this, titleElement, data);  
-          } else {
-            console.log("Error toggling starred status: " + data.errors.join(', '));
-          }
-        })
-        .catch(error => {  
-          console.error('Error:', error);
-        });  
-      });  
-    });  
-
-    const readItems = document.querySelectorAll('.article_item_read');
-    readItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const articleId = this.dataset.articleId;
-        const feedItem = this.closest('.article_item');
-        const titleElement = feedItem.querySelector('.article_item_title');
-
-        fetch(`/articles/${articleId}/toggle_read`, {
-          method: 'PATCH',
-          headers: {
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            updateReadStatus(this, titleElement, data);
-          } else {
-            alert('Error toggling read status: ' + data.errors.join(', '));
-          }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Network error occurred');
-        });
-      });
-    });
-
-    const titleItems = document.querySelectorAll('.article_item_title');
-    titleItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const feedItem = this.closest('.article_item');
-        const descriptionElement = feedItem.querySelector('.article_item_description');
-        const readButton = feedItem.querySelector('.article_item_read');
-        const itemHeaderElement = feedItem.querySelector('.article_item_header');
-
-        // Debug: log current display value
-        console.log('Current display:', descriptionElement.style.display);
-        
-        if (descriptionElement.style.display === 'none' || descriptionElement.style.display === '') {
-          console.log('Setting to block');
-          descriptionElement.style.display = 'block';
-
-          if(readButton.dataset.read === 'false') {
-            const articleId = readButton.dataset.articleId;
-
-            fetch(`/articles/${articleId}/toggle_read`, {
-              method: 'PATCH',
-              headers: {
-                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-              }
-            })
-            .then(response => response.json())
-            .then(data => {
-              if(data.success) {
-                updateReadStatus(readButton, this, data);
-              } else {
-                console.log('Error marking article as read: ' + data.errors.join(', '));
-              }
-            })
-            .catch(error => { 
-              console.error('Error:', error); 
-            });
-          }
-        } else {
-          descriptionElement.style.display = 'none';
-        }
-      });
-    });
-  });
-</script>

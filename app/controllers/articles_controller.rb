@@ -5,10 +5,19 @@ class ArticlesController < ApplicationController
   def index
     # @articles = Article.all
     # @articles = Article.limit(20).order(published: :desc)
+    # @articles = Article.includes(:feed)
+    #                   .where(filtered: false)
+    #                   .order(published: :desc, id: :desc) 
+    #                   .limit(20)
+  
+    # pagination 
     @articles = Article.includes(:feed)
                        .where(filtered: false)
-                       .order(published: :desc, id: :desc) 
-                       .limit(20)
+                       .order(published: :desc, id: :desc)
+                       .page(params[:page])
+  
+    
+    
   end
 
   # GET /articles/1 or /articles/1.json
@@ -120,12 +129,10 @@ class ArticlesController < ApplicationController
 
 
 private
-  # Use callbacks to share common setup or constraints between actions.
   def set_article
     @article = Article.find(params.expect(:id))
   end
 
-  # Only allow a list of trusted parameters through.
   def article_params
     params.expect(article: [ :feed_id, :title, :description, :url, :published, :read, :starred, :filtered ])
   end
