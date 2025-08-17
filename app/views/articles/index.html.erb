@@ -48,7 +48,7 @@
       </div>
       <div class="article_item_body">
         <div class="article_item_description" style="display: none;">
-          <%= sanitize(article.description) %>
+          <%= article.sanitized_description.html_safe %>
           <br />
           <br />
           

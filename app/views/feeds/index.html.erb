@@ -2,12 +2,23 @@
 
 <% content_for :title, "Feeds" %>
 
-<h1>Feeds</h1>
+<h1>Feeds</h1>    
+<%= link_to "New feed", new_feed_path %>
 
-<div id="feeds">
+
+<div id="feeds" class="feeds">
   <% @feeds.each do |feed| %>
-    <%= render feed %>
+    <div class="feeds_item">
+      <div class="feeds_category" style="background-color: <%= feed.category.color %>"><%= feed.category.name %></div>
+      <div class="feeds_name"><%= feed.name %></div>
+      <div class="feeds_url"><%= feed.url %></div>
+      <div class="feeds_show"><%= link_to "Edit this feed", edit_feed_path(feed) %></div>
+    </div>
   <% end %>
+
 </div>
 
-<%= link_to "New feed", new_feed_path %>
+<style>
+
+
+</style>

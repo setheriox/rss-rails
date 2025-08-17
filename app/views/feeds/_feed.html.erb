@@ -1,7 +1,7 @@
 <div id="<%= dom_id feed %>" class="article_item">
   <div class="feed_name"><%= link_to feed.name, feed_path(feed) %></div>
   <div class="feed_url"><%= link_to feed.url, feed.url, target: "_blank" %></div>
-  
+  <div class="feeds_category"><%= feed.category.name %></div>
   <div class="feed_show"><%= link_to "Edit this feed", edit_feed_path(feed) %></div>
 </div>
 <style>

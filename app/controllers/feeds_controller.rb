@@ -3,7 +3,8 @@ class FeedsController < ApplicationController
 
   # GET /feeds or /feeds.json
   def index
-    @feeds = Feed.all
+    @feeds = Feed.includes(:category).order('categories.name, feeds.name, feeds.url')
+    @categories = Category.all
   end
 
   # GET /feeds/1 or /feeds/1.json
@@ -13,16 +14,18 @@ class FeedsController < ApplicationController
   # GET /feeds/new
   def new
     @feed = Feed.new
+    @categories = Category.all
   end
 
   # GET /feeds/1/edit
   def edit
+    @categories = Category.all
   end
 
   # POST /feeds or /feeds.json
   def create
     @feed = Feed.new(feed_params)
-
+    
     respond_to do |format|
       if @feed.save
         format.html { redirect_to @feed, notice: "Feed was successfully created." }
@@ -65,6 +68,6 @@ class FeedsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def feed_params
-      params.expect(feed: [ :name, :url ])
+      params.expect(feed: [ :name, :url, :category_id ])
     end
 end
