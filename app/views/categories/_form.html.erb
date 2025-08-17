@@ -18,7 +18,7 @@
 
   <div>
     <%= form.label :color, style: "display: block" %>
-    <%= form.text_field :color %>
+    <%= form.color_field :color, value: (category.color || "#000000") %>
   </div>
 
   <div>

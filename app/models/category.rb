@@ -3,6 +3,17 @@ class Category < ApplicationRecord
     validates :name, presence: true, uniqueness: true
     
     # validate color is a 6-digit valid hex color
-    # utilizes app/validators/hex_color_validator.rb
-    validates :color, presence: true, hex_color: true
+    validates :color, presence: true
+    validate :color_must_be_hex
+    
+    private
+    
+    def color_must_be_hex
+        return unless color.present?
+        
+        hex_regex = /\A#[A-Fa-f0-9]{6}\z/
+        unless color.match?(hex_regex)
+            errors.add(:color, "must be a valid six digit hex code")
+        end
+    end
 end
