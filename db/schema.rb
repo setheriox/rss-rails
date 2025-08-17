@@ -12,15 +12,15 @@
 
 ActiveRecord::Schema[8.0].define(version: 2025_08_17_151111) do
   create_table "articles", force: :cascade do |t|
-    t.bigint "feed_id", null: false
+    t.integer "feed_id", null: false
     t.string "title"
     t.text "description"
     t.string "url"
     t.datetime "published"
+    t.integer "filter_id"
     t.boolean "read", default: false, null: false
     t.boolean "starred", default: false, null: false
     t.boolean "filtered", default: false, null: false
-    t.bigint "filter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["feed_id"], name: "index_articles_on_feed_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_151111) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "feeds", force: :cascade do |t|
@@ -39,7 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_151111) do
     t.string "url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "category_id", null: false
+    t.integer "category_id", null: false
     t.index ["category_id"], name: "index_feeds_on_category_id"
   end
 
