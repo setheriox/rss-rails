@@ -338,8 +338,10 @@ a:hover {
   margin-bottom: 10px;
 }
 
-.btn_new a {
-  display: inline-block;
+.btn_new a, .btn_new input {
+  display: inline-flex;
+  min-width: 4rem;
+  max-width: 12rem;
   background: var(--link-primary);
   color: var(--text-primary);
   border-radius: var(--border-radius);
@@ -347,10 +349,24 @@ a:hover {
   text-decoration: none;
   font-weight: bold;
   transition: background 0.2s ease;
-
+  cursor: pointer;
 }
-
-.btn_new a:hover {
+.btn_new input[type="submit"] {
+  display: inline-flex;
+  min-width: 4rem;
+  max-width: 12rem;
+  background: var(--link-primary);
+  color: var(--text-primary);
+  border: none;            /* remove the 1px border */
+  border-radius: var(--border-radius);
+  padding: var(--btn-padding);
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s ease;
+  cursor: pointer;
+  height: auto;            /* optional, let padding control height */
+}
+.btn_new a:hover , .btn_new input:hover {
   background: #4338ca;
 }
 
@@ -358,6 +374,18 @@ a:hover {
 /* =============================================================================
    CATEGORY COMPONENTS
    ============================================================================= */
+.category_header {
+  max-width: 400px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.categories {
+  max-width: 24rem !important;
+  margin-left: auto;
+  margin-right: auto;
+
+}
 .category_name {
   display: flex;
   color: #000;
@@ -372,16 +400,21 @@ a:hover {
   height: 24px;
   align-items: center;
   justify-content: center;
-  width: 10rem;
+  width: 24rem;
 }
 
-.category_name_text,
+.category_name_text {
+  width: 12rem;
+  text-align: left;
+}
 .category_name_color {
-  width: 50%;
-  text-align: center;
+  width: 6 rem;
+  text-align: right;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .category_show {
+  width: 12rem;
   margin-top: auto;
   margin-bottom: auto;
   vertical-align: middle;
@@ -468,7 +501,19 @@ a:hover {
   padding: 16px;
   margin-bottom: 24px;
 }
-
+.category_options {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+  justify-content: center;
+}
+.category_options input {
+  height: 2rem;
+  border-width: 1px;
+}
+.category_options .btn_new a {
+  background-color: #f00;
+} 
 
 /* =============================================================================
    FEEDS ITEM COMPONENTS

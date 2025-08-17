@@ -3,13 +3,21 @@ class CategoriesController < ApplicationController
 
   # GET /categories or /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.all    
+    @categories = Category.left_joins(:feeds)
+                     .select("categories.*, COUNT(feeds.id) AS feeds_count")
+                     .group("categories.id")
   end
 
   # GET /categories/1 or /categories/1.json
   def show
+    @categories_feeds = @category.feeds.order(name: :asc)
+    @categories_feeds = @category.feeds.left_joins(:articles)
+                                       .select("feeds.*, COUNT(articles.id) AS articles_count")
+                                       .group("feeds.id")
+                                       .order(name: :asc)
   end
-
+  
   # GET /categories/new
   def new
     @category = Category.new

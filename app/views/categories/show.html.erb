@@ -1,10 +1,21 @@
 <p style="color: green"><%= notice %></p>
 
+<div>
+      <div class="btn_new">
+        <%= link_to "Back to categories", categories_path %>
+    </div>
+</div>
 <%= render @category %>
 
-<div>
-  <%= link_to "Edit this category", edit_category_path(@category) %> |
-  <%= link_to "Back to categories", categories_path %>
+<div class="categories_show_all">
+    <%# @filtered_articles.each do |article| %>
+    <% @categories_feeds.each do |feed| %>
 
-  <%= button_to "Destroy this category", @category, method: :delete %>
+    <div class="feeds_item">
+        <div class="feeds_name"><%= feed.name %></div>
+        <div class="feeds_url"><%= feed.url %></div>
+        <div class="feeds_count"><%= feed.articles_count %></div>
+
+    </div>
+    <% end %>
 </div>
