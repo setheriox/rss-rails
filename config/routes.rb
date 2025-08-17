@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   resources :filters
   resources :articles do
     member do

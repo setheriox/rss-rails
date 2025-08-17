@@ -1,3 +1,3 @@
-every 1.hour do
+every 30.minutes do
   runner "FetchFeedsService.call"
 end

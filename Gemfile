@@ -66,3 +66,7 @@ gem 'httparty'
 gem 'whenever'
 gem 'nokogiri'
 gem 'kaminari'
+
+group :development, :test do
+  gem 'rspec-rails'
+end
