@@ -3,7 +3,11 @@ class FiltersController < ApplicationController
 
   # GET /filters or /filters.json
   def index
+    # @filters = Filter.all
     @filters = Filter.all
+    @filters = Filter.left_joins(:articles)
+                     .select("filters.*, COUNT(articles.id) AS articles_count")
+                     .group("filters.id")
   end
 
   # GET /filters/1 or /filters/1.json

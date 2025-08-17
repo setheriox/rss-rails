@@ -34,4 +34,7 @@
 /config/master.key
 /vendor/*
 /vendor/
-config/_database.yml
+/config/_database.yml
+/db/*.sqlite3-wal
+/db/*.sqlite3-shm
+/db/*.sqlite3-wal

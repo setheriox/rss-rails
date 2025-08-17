@@ -2,15 +2,20 @@
 
 <% content_for :title, "Filters" %>
 
-<h1>Filters</h1>
-<div class="btn_new">
-  <%= link_to "New filter", new_filter_path %>
+<div class="page_header filter_header">
+  <h1>Filters</h1>
+  <div class="btn_new">
+    <%= link_to "New filter", new_filter_path %>
+  </div>
 </div>
-
 <div id="filters" class="filters">
   <% @filters.each do |filter| %>
     <%#= render filter %>
     <div class="filters_item">
+      <div class="filters_item_info">
+        <!-- There has to be a better way to do this... --> 
+        (<%= filter.articles_count %>)
+      </div>
       <div class="filters_item_term">
         <%= filter.term %>
       </div>
@@ -23,6 +28,6 @@
       <div class="filters_item_show">
         <%= link_to "Show this filter", filter %>
       </div>
-    </div>    
+    </div>
   <% end %>
 </div>
