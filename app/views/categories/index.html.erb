@@ -3,14 +3,30 @@
 <% content_for :title, "Categories" %>
 
 <h1>Categories</h1>
-
-<div id="categories">
-  <% @categories.each do |category| %>
-    <%= render category %>
-    <p>
-      <%= link_to "Show this category", category %>
-    </p>
-  <% end %>
+<div class="category_btn_new">
+  <%= link_to "New category", new_category_path %>
 </div>
 
-<%= link_to "New category", new_category_path %>
+  <% @categories.each do |category| %>
+<div id="categories" class="category_container">
+    
+
+
+    <!-- Let's just save these lines for later... -->
+    <%#= render category %>
+    <!-- End of pre-created lines -->
+
+  <div class="category_name" style="background-color: <%= category.color %> ">
+    <div class="category_name_text">
+      <%= category.name %>
+    </div>
+    <div class="category_name_color">
+      <%= category.color %>
+    </div>
+  </div>
+  <div class="category_show">
+    <%= link_to "Show this category", category %>
+  </div>
+</div>
+  <% end %>
+

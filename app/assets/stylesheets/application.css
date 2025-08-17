@@ -29,6 +29,10 @@
     --entry-padding: 4px 8px;
     --entry-gap: 8px;
     --entry-margin: 2px 0;
+
+    --btn-padding: 8px 12px;
+    --form-padding: 8px 12px;
+    --form-margin: 8px 0px;
 }
 
 
@@ -285,6 +289,140 @@ a:hover {
 .filters_item_show  {
     width: 30%;
     text-align: center;
+}
+
+/* =============================================================================
+   CATEGORY COMPONENTS
+   ============================================================================= */
+.category_btn_new {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.category_btn_new a {
+    display: inline-block;
+    background: var(--link-primary);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    padding: var(--btn-padding);
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s ease;
+    
+}
+
+.category_btn_new a:hover {
+    background: #4338ca;
+}
+
+.category_container {
+    display: flex;
+    margin-top: 12px;
+
+}
+
+.category_name {
+  display: flex;
+  color: #000;
+  text-align: center;
+  border-radius: var(--border-radius);
+  padding: var(--entry-padding);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  transition: var(--transition);
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  width: 10rem;
+}
+.category_name_text,.category_name_color {
+  width: 50%;
+  text-align: center;
+}
+.category_show {
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.category_form_container {
+    max-width: 500px;
+    margin: 16px auto;
+    padding: var(--form-padding);
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+.category_form_field {
+    margin-bottom: var(--form-padding);
+}
+.category_form_field label {
+    display: block;
+    margin: var(--form-margin);
+    color: var(--text-primary);
+    font-weight: bold;
+    font-size: var(--font-size-xl);
+}
+
+.category_form_field input[type="text"],
+.category_form_field input[type="color"] {
+    width: 100%;
+    height: var(--entry-height);
+    padding: var(--entry-padding);
+    background: var(--background);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    transition: var(--transition);
+}
+
+.category_form_field input[type="color"] {
+  height: 64px;
+}
+
+.category_form_field_submit {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 120px;
+}
+.category_form_field_submit input {
+    background: var(--primary);
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--btn-padding);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    
+}
+
+.category_form_field input[type="submit"]:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.4);
+}
+
+.category_form_field input[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+}
+
+/* Error styles */
+.category_form_errors {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 24px;
 }
 
 

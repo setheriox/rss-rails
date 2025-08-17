@@ -1,12 +1,11 @@
 <div id="<%= dom_id category %>">
-  <p>
-    <strong>Name:</strong>
-    <%= category.name %>
-  </p>
 
-  <p>
-    <strong>Color:</strong>
-    <%= category.color %>
-  </p>
-
+  <div class="category_name" style="background-color: <%= category.color %> ">
+    <div class="category_name_text">
+      <%= category.name %>
+    </div>
+    <div class="category_name_color">
+      <%= category.color %>
+    </div>
+  </div>
 </div>

@@ -1,27 +1,29 @@
-<%= form_with(model: category) do |form| %>
-  <% if category.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+<div class="category_form_container">
+  <%= form_with(model: category) do |form| %>
+    <% if category.errors.any? %>
+      <div class="category_form_errors">
+        <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
 
-      <ul>
-        <% category.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% category.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="category_form_field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div class="category_form_field">
+      <%= form.label :color %>
+      <%= form.color_field :color, value: (category.color || "#000000") %>
+    </div>
+
+    <div class="category_form_field_submit">
+      <%= form.submit %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :color, style: "display: block" %>
-    <%= form.color_field :color, value: (category.color || "#000000") %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
