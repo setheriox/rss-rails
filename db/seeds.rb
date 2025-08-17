@@ -23,42 +23,7 @@ gaming = Category.find_by!(name: "Gaming")
 
 # feeds
 feeds = [
-
   { name: "Anime News Network", url: "https://www.animenewsnetwork.com/newsfeed/rss.xml", category: anime },
-
-
-  { name: "[GM]Dave", url: "https://bannable-offenses.blogspot.com/feeds/posts/default", category: gaming },
-  { name: "IGN", url: "https://www.ign.com/rss/v2/articles/feed", category: gaming },
-
-
-
-
-
-  { name: "Slashdot", url: "https://rss.slashdot.org/Slashdot/slashdot", category: news },
-
-
-
-
-
-  { name: "programminghumor", url: "https://www.reddit.com/r/programminghumor.rss", category: reddit },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  { name: "kumanuki", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCYYlQ_kMJ5fV3RxpDd1TALQ", category: youtube },
-  { name: "Legal Mindset", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtiec4EBNN3iiNgXHgykm9A", category: youtube },
-  { name: "Matthew Shezmen", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCB4WnO_ELLYdSBxiFn3Wn1A", category: youtube }
 ]
 feeds.each do |f|
   Feed.find_or_create_by!(name: f[:name]) do |feed|
