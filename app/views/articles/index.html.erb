@@ -3,8 +3,6 @@
 <% content_for :title, "Articles" %>
 <div id="articles" data-controller="articles">
   <% @articles.each do |article| %>
-  <%#= render article %>
-  <%#= link_to "Show this article", article %>
   <div class="article_item">
 
     <% if article.read == true %>
@@ -51,7 +49,6 @@
           <%= article.sanitized_description.html_safe %>
           <br />
           <br />
-          
           <a href="<%= article.url %>" target="_blank">*Visit Full Article*</a>
         </div>
       </div>
@@ -61,5 +58,3 @@
   <%= paginate @articles %>
 </div>
 </div>
-
-<%#= link_to "New article", new_article_path %>

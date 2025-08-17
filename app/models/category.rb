@@ -1,24 +1,12 @@
 class Category < ApplicationRecord
     has_many :feeds
-
-
-    validates :name, presence: true, uniqueness: true
-    # validate color is a 6-digit valid hex color
-    validates :color, presence: true
-    validate :color_must_be_hex
     
+    # sqlite3 needs case_sensitive flag, postgres does not
+    validates :name, presence: true, uniqueness: { case_sensitive: false }
+    validates :color, presence: true,
+                      format: { with: /\A#[0-9a-fA-F]{6}\z/, message: "must be a valid six-digit hex code with pound" }
+
     def self.uncategorized
-        find_or_create_by(name: "Uncategorized") do |category|
-            category.color = "#ffffff"
-        end
-    end
-    private
-    def color_must_be_hex
-        return unless color.present?
-        
-        hex_regex = /\A#[A-Fa-f0-9]{6}\z/
-        unless color.match?(hex_regex)
-            errors.add(:color, "must be a valid six digit hex code")
-        end
+        find_by(name: "Uncategorized")
     end
 end

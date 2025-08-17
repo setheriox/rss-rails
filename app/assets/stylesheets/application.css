@@ -76,6 +76,18 @@ a:hover {
     padding: 8px 16px;
 }
 
+.category_container {
+    display: flex;
+    margin-top: 12px;
+
+}
+
+.page_header {
+
+  width: 100%;
+  text-align: left;
+  margin-bottom: 12px;
+}
 /* =============================================================================
    NAVBAR
    ============================================================================= */
@@ -299,13 +311,13 @@ a:hover {
 }
 
 /* =============================================================================
-   CATEGORY COMPONENTS
+   BUTTONS COMPONENTS
    ============================================================================= */
-.category_btn_new {
+.btn_new {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.category_btn_new a {
+.btn_new a {
     display: inline-block;
     background: var(--link-primary);
     color: var(--text-primary);
@@ -317,16 +329,14 @@ a:hover {
     
 }
 
-.category_btn_new a:hover {
+.btn_new a:hover {
     background: #4338ca;
 }
 
-.category_container {
-    display: flex;
-    margin-top: 12px;
 
-}
-
+/* =============================================================================
+   CATEGORY COMPONENTS
+   ============================================================================= */
 .category_name {
   display: flex;
   color: #000;

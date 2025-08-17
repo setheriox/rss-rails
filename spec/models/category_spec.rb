@@ -2,7 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Category, type: :model do
   describe "validations" do
-
+    it "requires a unique name" do
+      Category.create!(name: "UniqueName", color: "#123456")
+      duplicate = Category.new(name: "UniqueName", color: "#123456")
+      expect(duplicate).not_to be_valid
+    end
+    
     it "is valid with a proper 6-digit hex color" do
       category = Category.new(name: "Valid", color: "#ABC123")
       expect(category).to be_valid
@@ -33,7 +38,7 @@ RSpec.describe Category, type: :model do
     end
     
     it "requires a unique name" do
-      category = Category.new(name: "UniqueName", color: "#ABCDEF")
+      category = Category.create!(name: "UniqueName", color: "#ABCDEF")
       duplicate = Category.new(name: "UniqueName", color: "#123456")
       expect(duplicate).not_to be_valid
       expect(duplicate.errors[:name]).to include("has already been taken")

@@ -3,9 +3,9 @@
 <% content_for :title, "Filters" %>
 
 <h1>Filters</h1>
-
-
-<h2><%= link_to "New filter", new_filter_path %></h2>
+<div class="btn_new">
+  <%= link_to "New filter", new_filter_path %>
+</div>
 
 <div id="filters" class="filters">
   <% @filters.each do |filter| %>
@@ -23,10 +23,6 @@
       <div class="filters_item_show">
         <%= link_to "Show this filter", filter %>
       </div>
-    </div>
-
-    
-    
-    
+    </div>    
   <% end %>
 </div>

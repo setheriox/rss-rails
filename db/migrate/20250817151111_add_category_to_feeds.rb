@@ -1,7 +1,7 @@
 class AddCategoryToFeeds < ActiveRecord::Migration[8.0]
   def change
     add_reference :feeds, :category, null: true, foreign_key: true
-
+    add_index :categories, :name, unique: true
     # Create Uncategorized category entry with white as color
     uncategorized = Category.find_or_create_by(name: "Uncategorized") do |cat|
       cat.color = "#ffffff"

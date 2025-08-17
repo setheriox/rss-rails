@@ -1,43 +1,72 @@
 # db/seeds.rb
-Feed.create([
-    { name: "Slashdot", url: "https://rss.slashdot.org/Slashdot/slashdot" },
-    { name: "TechCrunch", url: "https://techcrunch.com/feed/" },
-    { name: "MyAnimeList", url: "https://myanimelist.net/rss/news.xml" },
-    { name: "ArsTechnica", url: "https://arstechnica.com/information-technology/feed/" },
-    { name: "servethehome", url: "https://www.servethehome.com/feed/" },
-    { name: "Toms Hardware", url: "https://www.tomshardware.com/feeds.xml" },
-    { name: "Science Daily", url: "https://www.sciencedaily.com/rss/top/technology.xml" },
-    { name: "Play Asia", url: "https://play.asia/blog/feed/" },
-    { name: "IGN", url: "https://www.ign.com/rss/v2/articles/feed" },
-    { name: "changelog", url: "https://changelog.com/feed" },
-    { name: "gematsu", url: "https://www.gematsu.com/feed" },
-    { name: "sysadmin", url: "https://www.reddit.com/r/sysadmin.rss" },
-    { name: "programminghumor", url: "https://www.reddit.com/r/programminghumor.rss" },
-    { name: "AnimeCollectors", url: "https://www.reddit.com/r/AnimeCollectors.rss" },
-    { name: "anime", url: "https://www.reddit.com/r/anime.rss" },
-    { name: "Yattatachi", url: "https://yattatachi.com/feed" },
-    { name: "NVIDIA Newsroom", url: "https://nvidianews.nvidia.com/rss.xml" },
-    { name: "Skidrow-Games", url: "https://feeds.feedburner.com/skidrowgamesfeed" },
-    { name: "Limit Break Radio", url: "http://www.limitbreakradio.com/rss.xml" },
-    { name: "hackster.io", url: "https://www.hackster.io/projects?format=atom&sort=recent" },
-    { name: "Limited Run Games", url: "https://limitedrungames.com/blogs/news.atom" },
-    { name: "Anime Corner Store", url: "https://animecornerstore.blogspot.com/feeds/posts/default?alt=rss" },
-    { name: "[GM]Dave", url: "https://bannable-offenses.blogspot.com/feeds/posts/default" },
-    { name: "Microsoft Office Info", url: "https://status.cloud.microsoft/api/feed/mac" },
-    { name: "RSS", url: "http://192.168.1.150:31500/rss" },
-    { name: "Change Detection", url: "https://change.thestoryisover.net/rss?token=d6ae0e7ea3c04e95f0cc5df8f5a8d31e" },
-    { name: "Legal Mindset", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtiec4EBNN3iiNgXHgykm9A" },
-    { name: "DPatriot", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCJPUolPbvMvGWLGhDJcnjJA" },
-    { name: "Dave's Garage", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCNzszbnvQeFzObW0ghk0Ckw" },
-    { name: "Holo Subs EN", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCMfgZuwBxJRhoahep4kRC5w" },
-    { name: "kumanuki", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCYYlQ_kMJ5fV3RxpDd1TALQ" },
-    { name: "Matthew Shezmen", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCB4WnO_ELLYdSBxiFn3Wn1A" },
-    { name: "Corridor Crew", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCSpFnDQr88xCZ80N-X7t0nQ" },
-    { name: "Euro Brady", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UC4ChspfTaiJcoHEs5b8_3IQ" },
-    { name: "Wired", url: "https://www.wired.com/feed" },
-    { name: "Anime News Network", url: "https://www.animenewsnetwork.com/newsfeed/rss.xml" },
-    { name: "The Verge", url: "https://www.theverge.com/rss/full.xml" }
-])
+
+# categories
+Category.find_or_create_by!(name: "Uncategorized") { |cat| cat.color = "#ffffff" }
+Category.find_or_create_by!(name: "Anime") { |cat| cat.color = "#8ff0a4" }
+Category.find_or_create_by!(name: "News") { |cat| cat.color = "#3584e4" }
+Category.find_or_create_by!(name: "Reddit") { |cat| cat.color = "#e01b24" }
+Category.find_or_create_by!(name: "Server") { |cat| cat.color = "#dc8add" }
+Category.find_or_create_by!(name: "youtube") { |cat| cat.color = "#ff7800" }
+Category.find_or_create_by!(name: "Tech") { |cat| cat.color = "#3584e4" }
+Category.find_or_create_by!(name: "Torrents") { |cat| cat.color = "#8ff0a4" }
+Category.find_or_create_by!(name: "Gaming") { |cat| cat.color = "#408654" }
+
+uncategorized = Category.find_by!(name: "Uncategorized")
+anime = Category.find_by!(name: "Anime")
+news = Category.find_by!(name: "News")
+reddit = Category.find_by!(name: "Reddit")
+server = Category.find_by!(name: "Server")
+youtube = Category.find_by!(name: "youtube")
+tech = Category.find_by!(name: "Tech")
+torrents = Category.find_by!(name: "Torrents")
+gaming = Category.find_by!(name: "Gaming")
+
+# feeds
+feeds = [
+
+  { name: "Anime News Network", url: "https://www.animenewsnetwork.com/newsfeed/rss.xml", category: anime },
+
+
+  { name: "[GM]Dave", url: "https://bannable-offenses.blogspot.com/feeds/posts/default", category: gaming },
+  { name: "IGN", url: "https://www.ign.com/rss/v2/articles/feed", category: gaming },
+
+
+
+
+
+  { name: "Slashdot", url: "https://rss.slashdot.org/Slashdot/slashdot", category: news },
+
+
+
+
+
+  { name: "programminghumor", url: "https://www.reddit.com/r/programminghumor.rss", category: reddit },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  { name: "kumanuki", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCYYlQ_kMJ5fV3RxpDd1TALQ", category: youtube },
+  { name: "Legal Mindset", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtiec4EBNN3iiNgXHgykm9A", category: youtube },
+  { name: "Matthew Shezmen", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCB4WnO_ELLYdSBxiFn3Wn1A", category: youtube }
+]
+feeds.each do |f|
+  Feed.find_or_create_by!(name: f[:name]) do |feed|
+    feed.url = f[:url]
+    feed.category = f[:category] || uncategorized
+  end
+end
+
 Filter.create!([
   { term: "promo", title: true, description: false },
   { term: "coupon", title: true, description: false },
