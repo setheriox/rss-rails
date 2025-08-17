@@ -38,11 +38,9 @@ This is my first real rails project. Still very much a work in progress.
    rails server
    ```
 5. **Automation**:
+   Work in progress, for time being im using a crontab that calls the following everything 30 minutes
    ```bash
-   # Example cron job (configure in config/schedule.rb)
-   every 30.minutes do
-     runner "FetchFeedsService.call"
-   end
+   rails feeds:fetch
    ```
 
 
