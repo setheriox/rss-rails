@@ -23,7 +23,9 @@ gaming = Category.find_by!(name: "Gaming")
 
 # feeds
 feeds = [
+  { name: "Slashdot", url: "https://rss.slashdot.org/Slashdot/slashdot" },
   { name: "Anime News Network", url: "https://www.animenewsnetwork.com/newsfeed/rss.xml", category: anime },
+  { name: "TechCrunch", url: "https://techcrunch.com/feed/", category: news }
 ]
 feeds.each do |f|
   Feed.find_or_create_by!(name: f[:name]) do |feed|

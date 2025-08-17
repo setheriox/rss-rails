@@ -17,7 +17,7 @@ RSpec.describe "db:seeds" do
 
   it "creates the expected feeds" do
     load Rails.root.join("db/seeds.rb")
-    expect(Feed.count).to eq(36) # update if you add/remove feeds
+    expect(Feed.count).to eq(3) # update if you add/remove feeds
 
     expect(Feed.pluck(:name)).to include("Slashdot", "TechCrunch", "Anime News Network")
     expect(Feed.find_by(name: "Slashdot").url).to eq("https://rss.slashdot.org/Slashdot/slashdot")

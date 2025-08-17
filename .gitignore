@@ -35,14 +35,7 @@
 /vendor/*
 /vendor/
 /config/_database.yml
-/db/*.sqlite3-wal
+/db/*.sqlite3
 /db/*.sqlite3-shm
 /db/*.sqlite3-wal
-db/development.sqlite3
-db/development.sqlite3-shm
-db/development.sqlite3-wal
-db/test.sqlite3-shm
-db/test.sqlite3-wal
-db/development.sqlite3
-db/development.sqlite3-shm
-db/development.sqlite3-wal
+db/seeds.rb
