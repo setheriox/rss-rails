@@ -3,14 +3,11 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    # @articles = Article.all
-    # @articles = Article.limit(20).order(published: :desc)
-    # @articles = Article.includes(:feed)
-    #                   .where(filtered: false)
-    #                   .order(published: :desc, id: :desc) 
-    #                   .limit(20)
-  
-    # pagination 
+    
+    # Utilizes kaminari pagination, config @ config/initializers/kaminariconfig.rb
+    # Grab only the articles not explicitly filtered, include the feed to avoid N+1 queries,
+    # sort newest first by published date and ID, then paginate
+
     @articles = Article.includes(:feed)
                        .where(filtered: false)
                        .order(published: :desc, id: :desc)
@@ -71,7 +68,7 @@ class ArticlesController < ApplicationController
     end
   end
 
-
+  # Toggle read/unread status for an article via AJAX / Stimulus?
   def toggle_read
     @article = Article.find(params[:id])
     
@@ -99,6 +96,8 @@ class ArticlesController < ApplicationController
     }, status: :not_found
   end
 
+
+  # Toggle read/unread status for an article via AJAX / Stimulus?
   def toggle_starred
     @article = Article.find(params[:id])
     
