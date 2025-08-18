@@ -39,3 +39,4 @@
 /db/*.sqlite3-shm
 /db/*.sqlite3-wal
 db/seeds.rb
+db/test.sqlite3db/*.sqlite3
