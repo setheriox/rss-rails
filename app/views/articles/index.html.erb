@@ -1,23 +1,37 @@
 <style>
-
+.articles-category-list {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+.articles-category-item {
+  color: var(--surface);
+  display: flex;
+  padding: var(--entry-padding);
+  border-radius: 12px;
+}
+.articles-category-item a {
+  color: var(--surface);
+  
+}
 </style>
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Articles" %>
 <div class="articles_header">
-  <div class="articles-buttons-container">
-    <div class="articles_button">
-      <%= button_to "Mark All as Read", mark_all_read_articles_path,
-          method: :patch,
-          class: "btn_mark_read" %>
+
+  <div class="articles-category-list">
+    <div class="articles-category-item" style="background-color: #666;">
+      <%= link_to "All Categories", articles_path %>
     </div>
-    <div class="articles_button">
-      <% if params[:starred].present? %>
-      <%= link_to "Show All", articles_path, class: "btn_show_all" %>
-      <% else %> 
-      <%= link_to "Show Only Starred", articles_path(starred: true), class: "btn_starred_only" %>
-      <% end %>
-    </div>
+    <% @categories.each do |category| %>
+      <div class="articles-category-item" style="background-color: <%= category.color%>">
+        <%= link_to category.name, articles_path(category_id: category.id) %>
+      </div>
+    <% end %>
   </div>
 
   <div class="pagination-container">
@@ -82,3 +96,18 @@
     <%= paginate @articles %>
   </div>
 </div>
+
+  <div class="articles-buttons-container">
+    <div class="articles_button">
+      <%= button_to "Mark All as Read", mark_all_read_articles_path,
+          method: :patch,
+          class: "btn_mark_read" %>
+    </div>
+    <div class="articles_button">
+      <% if params[:starred].present? %>
+      <%= link_to "Show All", articles_path, class: "btn_show_all" %>
+      <% else %> 
+      <%= link_to "Show Only Starred", articles_path(starred: true), class: "btn_starred_only" %>
+      <% end %>
+    </div>
+  </div>

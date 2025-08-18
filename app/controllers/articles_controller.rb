@@ -11,12 +11,20 @@ class ArticlesController < ApplicationController
                        .where(filtered: false)
                        .order(published: :desc, id: :desc)
   
+    if params[:category_id].present?
+      @articles = @articles.joins(:feed).where(feeds: { category_id: params[:category_id] })
+    end
     
     if params[:starred].present?
       @articles = @articles.where(starred: true)
     end
 
     @articles = @articles.page(params[:page])
+
+    # Get All Categories and Feeds
+    @categories = Category.left_joins(:feeds)
+                          .select("categories.*, COUNT(feeds.id) AS feeds_count")
+                          .group("categories.id")
   end
 
   # GET /articles/1 or /articles/1.json
