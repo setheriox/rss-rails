@@ -25,6 +25,7 @@ class ArticlesController < ApplicationController
     @categories = Category.left_joins(:feeds)
                           .select("categories.*, COUNT(feeds.id) AS feeds_count")
                           .group("categories.id")
+                          .order(name: :asc)
   end
 
   # GET /articles/1 or /articles/1.json
