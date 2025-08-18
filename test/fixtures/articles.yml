@@ -9,7 +9,6 @@ one:
   read: false
   starred: false
   filtered: false
-  guid: MyString
 
 two:
   feed: two
@@ -20,4 +19,3 @@ two:
   read: false
   starred: false
   filtered: false
-  guid: MyString

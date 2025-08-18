@@ -16,8 +16,7 @@ class ArticlesTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @article.description
     fill_in "Feed", with: @article.feed_id
-    check "Filtered" if @article.filtered
-    fill_in "Guid", with: @article.guid
+    check "Filtered" if @article.filteredza
     fill_in "Published", with: @article.published
     check "Read" if @article.read
     check "Starred" if @article.starred
@@ -36,7 +35,6 @@ class ArticlesTest < ApplicationSystemTestCase
     fill_in "Description", with: @article.description
     fill_in "Feed", with: @article.feed_id
     check "Filtered" if @article.filtered
-    fill_in "Guid", with: @article.guid
     fill_in "Published", with: @article.published.to_s
     check "Read" if @article.read
     check "Starred" if @article.starred
