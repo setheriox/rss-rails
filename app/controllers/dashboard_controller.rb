@@ -1,12 +1,17 @@
 class DashboardController < ApplicationController
   def index
-
     @total_articles = Article.count
 
     @categories_count = Category.left_joins(feeds: :articles)
                                 .select('categories.*, COUNT(articles.id) AS articles_count')
                                 .group('categories.id')
                                 .order('articles_count DESC')
+
+    @top_feeds = Feed.joins(:articles)
+                     .group('feeds.name')
+                     .order('COUNT(articles.id) DESC')
+                     .limit(5)
+                     .count
 
     # Basic Count
     @total_articles = Article.count
@@ -19,7 +24,5 @@ class DashboardController < ApplicationController
     @unread_articles = Article.where(read: false).count
     @starred_articles = Article.where(starred: true).count
     @filtered_articles = Article.where(filtered: true).count
-
-    #@@read_percentage = @total_Articles > 0 ? (@read_articles.to_f / @total_articles * 100).round(1) : 0 
   end
 end

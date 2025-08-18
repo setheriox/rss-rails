@@ -1,13 +1,93 @@
 <div class="dashboaard">
-
-    <div class="dashboard-category">
-
-        <% @categories_count.each do |category| %>
-            <div class="d-c-name"><%= category.name %></div>
-            <div class="d-c-count"><%= category.articles_count %></div>
-        <% end %>
-<p>Total Articles: <%= @total_articles %></p>
-
+    <div class="d-totals">
+        <div class="d-totals-item">Total Articles: <%= @total_articles %></div>
+        <div class="d-totals-item">Total Feeds: <%= @total_feeds %></div>
+        <div class="d-totals-item">Total Categories: <%= @total_categories %></div>
+        <div class="d-totals-item">Total Filters: <%= @total_filters %></div>
     </div>
 
+
+    <div class="d-main">
+        <div class="d-category">
+            <% @categories_count.each do |category| %>
+                <div class="d-c-item">
+                    <div class="d-c-name"><%= category.name %></div>
+                    <div class="d-c-count"><%= category.articles_count %></div>
+                </div>
+            <% end %>
+        </div>
+
+        <div class="d-feeds">
+            <% if @top_feeds.any? %>
+                <% @top_feeds.each_with_index do |(feed_name,count)| %>
+                    <div class="d-f-item">
+                        <div class="d-f-name"><%= feed_name %></div>
+                        <div class="d-f-count"><%= count %></div>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
 </div>
+
+<style>
+.dashboaard {
+  background-color: var(--surface);
+  padding: var(--dash-padding);
+  border-radius: var(--border-radius);
+  max-width: 900px;
+  margin: var(--dash-margin);
+  font-size: var
+}
+
+.d-totals {
+  display: flex;
+  justify-content: center;
+  gap: var(--entry-gap);
+  margin-bottom: 2rem;
+}
+
+.d-totals-item {
+  background: var(--dash-item-bg);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  color: #f5f5f5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.d-main {
+  display: flex;
+  gap: var(--dash-main-gap);
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+.d-category, .d-feeds {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem 1rem;
+  width: 40%;
+  background: #181818;
+  padding: var(--dash-padding);
+  border-radius: var(--border-radius);
+}
+.d-c-item, .d-f-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.d-c-name, .d-f-name {
+    width: 40%;
+  font-weight: 600;
+  color: #bb86fc;
+}
+
+.d-c-count, .d-f-count {
+  font-weight: 500;
+  color: #03dac6;
+}
+
+
+</style>

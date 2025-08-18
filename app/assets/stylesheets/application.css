@@ -36,6 +36,11 @@
 
   --link-hover: #186cf4;
   --link-hover-border: #144390;
+
+  --dash-item-bg: #1e1e1e;
+  --dash-padding: 24px;
+  --dash-margin: 12px auto;
+  --dash-main-gap: 24px;
 }
 
 
