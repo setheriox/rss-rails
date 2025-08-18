@@ -31,8 +31,11 @@
   --entry-margin: 2px 0;
 
   --btn-padding: 8px 12px;
-  --form-padding: 8px 12px;
+  --form-padding: 4px 8px;
   --form-margin: 8px 0px;
+
+  --link-hover: #186cf4;
+  --link-hover-border: #144390;
 }
 
 
@@ -232,6 +235,65 @@ a:hover {
 }
 
 
+.articles_header {
+  display: flex;
+  flex-direction: column;
+}
+
+.articles_button {
+  
+}
+
+/* Style all button classes consistently */
+.btn_mark_read, 
+.btn_show_all, 
+.btn_starred_only {
+  display: inline-block;
+  width: 100%;
+  padding: var(--btn-padding);
+  text-align: center;
+  text-decoration: none;
+  background-color: var(--link-primary);
+  color: white;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  font-size: var(--font-size-s);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.btn_mark_read:hover, 
+.btn_show_all:hover, 
+.btn_starred_only:hover {
+  background-color: var(--link-hover);
+  border-color: var(--link-hover-border)
+}
+
+/* Ensure form buttons (button_to) don't have extra spacing */
+.btn_mark_read {
+  margin: 0;
+}
+
+/* Make sure form styling doesn't interfere */
+.articles_button form {
+  margin: 0;
+  width: 100%;
+}
+.artcles_button,
+.artcles_button a,
+.articles_button a:hover,
+.articles_button a:visited,
+.btn_mark_read,
+.btn_mark_read:hover {
+  color: var(--text-primary);
+  font-weight: normal;
+  text-decoration: none;
+}
+.articles-buttons-container {
+
+  display: flex;
+  gap: 1rem;
+}
 /* =============================================================================
    Pagination COMPONENTS
    ============================================================================= */
@@ -338,7 +400,7 @@ a:hover {
   margin-bottom: 10px;
 }
 
-.btn_new a, .btn_new input {
+.btn_new a, .btn_new input,.btn_new button {
   display: inline-flex;
   min-width: 4rem;
   max-width: 12rem;
@@ -366,7 +428,7 @@ a:hover {
   cursor: pointer;
   height: auto;            /* optional, let padding control height */
 }
-.btn_new a:hover , .btn_new input:hover {
+.btn_new a:hover , .btn_new input:hover, .btn_new button:hover{
   background: #4338ca;
 }
 

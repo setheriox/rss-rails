@@ -1,6 +1,30 @@
+<style>
+
+</style>
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Articles" %>
+<div class="articles_header">
+  <div class="articles-buttons-container">
+    <div class="articles_button">
+      <%= button_to "Mark All as Read", mark_all_read_articles_path,
+          method: :patch,
+          class: "btn_mark_read" %>
+    </div>
+    <div class="articles_button">
+      <% if params[:starred].present? %>
+      <%= link_to "Show All", articles_path, class: "btn_show_all" %>
+      <% else %> 
+      <%= link_to "Show Only Starred", articles_path(starred: true), class: "btn_starred_only" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="pagination-container">
+    <%= paginate @articles %>
+  </div>
+
+</div>
 <div id="articles" data-controller="articles">
   <% @articles.each do |article| %>
   <div class="article_item">
@@ -55,6 +79,6 @@
     </div>
   <% end %>
   <div class="pagination-container">
-  <%= paginate @articles %>
-</div>
+    <%= paginate @articles %>
+  </div>
 </div>

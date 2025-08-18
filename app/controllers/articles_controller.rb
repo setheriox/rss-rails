@@ -6,15 +6,17 @@ class ArticlesController < ApplicationController
     
     # Utilizes kaminari pagination, config @ config/initializers/kaminariconfig.rb
     # Grab only the articles not explicitly filtered, include the feed to avoid N+1 queries,
-    # sort newest first by published date and ID, then paginate
 
     @articles = Article.includes(:feed)
                        .where(filtered: false)
                        .order(published: :desc, id: :desc)
-                       .page(params[:page])
   
     
-    
+    if params[:starred].present?
+      @articles = @articles.where(starred: true)
+    end
+
+    @articles = @articles.page(params[:page])
   end
 
   # GET /articles/1 or /articles/1.json
@@ -125,7 +127,11 @@ class ArticlesController < ApplicationController
     }, status: :not_found
   end
 
-
+  # Button to mark all (unread) items as read
+  def mark_all_read
+    Article.where(read: false).update_all(read: true)
+    redirect_to articles_path, notice: "All Items Marked as Read"
+  end
 
 private
   def set_article
