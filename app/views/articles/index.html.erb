@@ -1,23 +1,3 @@
-<style>
-.articles-category-list {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: center;
-  width: 100%;
-  margin-top: 10px;
-}
-.articles-category-item {
-  color: var(--surface);
-  display: flex;
-  padding: var(--entry-padding);
-  border-radius: 12px;
-}
-.articles-category-item a,.articles-category-item a:hover,.articles-category-item a:visited {
-  color: var(--surface);
-  font-weight: normal;
-}
-</style>
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Articles" %>
@@ -33,6 +13,16 @@
       </div>
     <% end %>
   </div>
+  
+  <% if @selected_category.present? %>
+    <div class="articles-feed-list">
+      <% @feeds_in_category.each do |feed| %>
+        <div class="articles-feed-item" style="background-color: <%= @selected_category.color %>">
+          <%= link_to feed.name, articles_path(category_id: @selected_category.id, feed_id: feed.id) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="pagination-container">
     <%= paginate @articles %>
@@ -66,7 +56,7 @@
 
 
       <div class="article_item_name" style="background-color: <%= article.feed.category.color %>">
-        <%= article.feed.name %>
+        <span><%= article.feed.name %></span>
       </div>
 
       <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>; cursor: pointer;" data-action="click->articles#showDescription">
@@ -100,12 +90,16 @@
   <div class="articles-buttons-container">
     <div class="articles_button">
       <%= button_to "Mark Page as Read", 
-          mark_page_read_articles_path(page: params[:page], category_id: params[:category_id], starred: params[:starred]),
+          mark_page_read_articles_path(page: params[:page], 
+                                       category_id: params[:category_id], 
+                                       feed_id: params[:feed_id],
+                                       starred: params[:starred]),
           method: :patch,
           class: "btn_mark_read" %>
     </div>
     <div class="articles_button">
-      <%= button_to "Mark All as Read", mark_all_read_articles_path,
+      <%= button_to "Mark All as Read",
+          mark_all_read_articles_path,
           method: :patch,
           class: "btn_mark_read" %>
     </div>

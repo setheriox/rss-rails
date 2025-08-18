@@ -14,7 +14,14 @@ class ArticlesController < ApplicationController
     if params[:category_id].present?
       @articles = @articles.joins(:feed).where(feeds: { category_id: params[:category_id] })
     end
-    
+
+    # NOTE!!!! Revisit THIS!!!
+    # Just because I got feed id filtering, doesn't mean I'm done! 
+    # I need to check out to make sure all other params are sent through all other methods as well
+    if params[:feed_id].present?
+      @articles = @articles.joins(:feed).where(articles: { feed_id: params[:feed_id] })
+    end
+
     if params[:starred].present?
       @articles = @articles.where(starred: true)
     end
@@ -26,6 +33,10 @@ class ArticlesController < ApplicationController
                           .select("categories.*, COUNT(feeds.id) AS feeds_count")
                           .group("categories.id")
                           .order(name: :asc)
+    if params[:category_id].present?
+      @selected_category = Category.find(params[:category_id])
+      @feeds_in_category = @selected_category.feeds.order(:name)
+    end
   end
 
   # GET /articles/1 or /articles/1.json
