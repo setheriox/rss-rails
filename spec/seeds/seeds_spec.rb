@@ -17,7 +17,7 @@ RSpec.describe "db:seeds" do
 
   it "creates the expected feeds" do
     load Rails.root.join("db/seeds.rb")
-    expect(Feed.count).to eq(3) # update if you add/remove feeds
+    expect(Feed.count).to eq(7) # update if you add/remove feeds
 
     expect(Feed.pluck(:name)).to include("Slashdot", "TechCrunch", "Anime News Network")
     expect(Feed.find_by(name: "Slashdot").url).to eq("https://rss.slashdot.org/Slashdot/slashdot")
@@ -25,7 +25,7 @@ RSpec.describe "db:seeds" do
 
   it "creates the expected filters" do
     load Rails.root.join("db/seeds.rb")
-    expect(Filter.count).to eq(27) # adjust if you add/remove
+    expect(Filter.count).to eq(16) # adjust if you add/remove
 
     expect(Filter.pluck(:term)).to include("promo", "discount", "#shorts")
   end

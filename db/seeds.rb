@@ -25,7 +25,11 @@ gaming = Category.find_by!(name: "Gaming")
 feeds = [
   { name: "Slashdot", url: "https://rss.slashdot.org/Slashdot/slashdot" },
   { name: "Anime News Network", url: "https://www.animenewsnetwork.com/newsfeed/rss.xml", category: anime },
-  { name: "TechCrunch", url: "https://techcrunch.com/feed/", category: news }
+  { name: "TechCrunch", url: "https://techcrunch.com/feed/", category: news },
+  { name: "ArsTechnica", url: "https://arstechnica.com/information-technology/feed/", category: tech },
+  { name: "Dave's Garage", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCNzszbnvQeFzObW0ghk0Ckw", category: youtube },
+  { name: "hackster.io", url: "https://www.hackster.io/projects?format=atom&sort=recent", category: tech },
+  { name: "The Verge", url: "https://www.theverge.com/rss/full.xml", category: news }
 ]
 feeds.each do |f|
   Feed.find_or_create_by!(name: f[:name]) do |feed|
@@ -38,12 +42,9 @@ Filter.create!([
   { term: "promo", title: true, description: false },
   { term: "coupon", title: true, description: false },
   { term: "codes*025", title: true, description: false },
-  { term: "best deals today", title: true, description: false },
-  { term: "best*202", title: true, description: false },
-  { term: "last of us", title: true, description: false },
+  { term: "best deals", title: true, description: false },
   { term: "deals save", title: true, description: false },
   { term: "save deals", title: true, description: false },
-  { term: "best deals", title: true, description: false },
   { term: "best add", title: true, description: false },
   { term: "Combinator", title: true, description: false },
   { term: "how to choose", title: true, description: false },
@@ -53,13 +54,5 @@ Filter.create!([
   { term: "save*$", title: true, description: false },
   { term: "discount", title: true, description: false },
   { term: "cheap", title: true, description: false },
-  { term: "All Stage 2025", title: true, description: false },
-  { term: "202*Review", title: true, description: false },
-  { term: "trouble flying", title: true, description: false },
-  { term: "Prime Day", title: true, description: false },
-  { term: "save off", title: true, description: false },
-  { term: "best buy", title: true, description: false },
-  { term: "Tested Reviewed", title: true, description: false },
-  { term: "$*off", title: true, description: false },
   { term: "#shorts", title: true, description: false }
 ])
