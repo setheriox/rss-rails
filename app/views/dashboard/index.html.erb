@@ -1,0 +1,13 @@
+<div class="dashboaard">
+
+    <div class="dashboard-category">
+
+        <% @categories_count.each do |category| %>
+            <div class="d-c-name"><%= category.name %></div>
+            <div class="d-c-count"><%= category.articles_count %></div>
+        <% end %>
+<p>Total Articles: <%= @total_articles %></p>
+
+    </div>
+
+</div>

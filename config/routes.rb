@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/dashboard', to: 'dashboard#index', as: 'dashboard'
   resources :categories
   resources :filters
   resources :articles do
@@ -11,9 +12,11 @@ Rails.application.routes.draw do
     end
   end
   resources :feeds
+  resources :dashboard, only: [:index]
+
 
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  root "articles#index"
+  root "dashboard#index"
 end
