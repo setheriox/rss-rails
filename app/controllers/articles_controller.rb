@@ -139,9 +139,29 @@ class ArticlesController < ApplicationController
   # Button to mark all (unread) items as read
   def mark_all_read
     Article.where(read: false).update_all(read: true)
-    redirect_to articles_path, notice: "All Items Marked as Read"
+    redirect_to articles_path, 
+    notice: "All Items have been marked as read."
   end
 
+  # Button to mark current page items as read
+  def mark_page_read
+    articles = Article.includes(:feed)
+                      .where(filtered: false)
+                      .order(published: :desc, id: :desc)
+  
+    if params[:category_id].present?
+      articles = articles.where(starred: true)
+    end
+
+    page_articles = articles.page(params[:page])
+
+    page_articles.update_all(read: true)
+
+    redirect_to articles_path(page: params[:page], category_id: params[:category_id], starred: params[:starred]),
+      notice: "All items on current page have been marked as read."
+  
+  end
+  
 private
   def set_article
     @article = Article.find(params.expect(:id))

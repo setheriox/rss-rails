@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
-  resources :categories
-  resources :filters
+  
   resources :articles do
     member do
       patch :toggle_read
@@ -9,8 +8,12 @@ Rails.application.routes.draw do
     end
     collection do
       patch :mark_all_read
+      patch :mark_page_read
     end
   end
+  
+  resources :categories
+  resources :filters
   resources :feeds
   resources :dashboard, only: [:index]
 
