@@ -43,3 +43,4 @@ db/test.sqlite3db/*.sqlite3
 rss.db
 rss.db-wal
 rss.db-shm
+db/export_data.json

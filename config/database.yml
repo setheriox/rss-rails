@@ -13,3 +13,42 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+
+#default: &default
+#  adapter: postgresql
+#  encoding: unicode
+#  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#  username: dev
+#  password: <%= ENV["DB_PASSWORD"] %>
+#
+#development:
+#  <<: *default
+#  database: rss_dev
+#  host: localhost
+#
+#test:
+#  <<: *default
+#  database: rss_test
+#  host: localhost
+#
+#production:
+#  primary: &primary_production
+#    <<: *default
+#    host: postgres
+#    database: rss_prod
+#  
+#  cache:
+#    <<: *primary_production
+#    database: rss_production_cache
+#    migrations_paths: db/cache_migrate
+#  
+#  queue:
+#    <<: *primary_production
+#    database: rss_production_queue
+#    migrations_paths: db/queue_migrate
+#  
+#  cable:
+#    <<: *primary_production
+#    database: rss_production_cable
+#    migrations_paths: db/cable_migrate
