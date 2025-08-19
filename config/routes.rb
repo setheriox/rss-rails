@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get  "opml",        to: "opml#index",  as: :opml
+  get  "opml/export", to: "opml#export", as: :export_opml
+  post "opml/import", to: "opml#import", as: :import_opml
+
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
   
   resources :articles do
