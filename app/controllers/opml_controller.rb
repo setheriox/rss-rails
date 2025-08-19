@@ -7,7 +7,7 @@ class OpmlController < ApplicationController
     @feeds = Feed.includes(:category).order('categories.name, feeds.name')
   end
 
-  def importing
+  def import
     file = params[:file]
     doc = Nokogiri::XML(File.read(file.path))
 
