@@ -87,10 +87,15 @@ class OpmlController < ApplicationController
       # Save the feed!!!
       feed.save!
 
+    end
+
       # Fetch the articles from the feeds :)
       Rails.application.load_tasks unless Rake::Task.task_defined?("feeds:fetch")
       Rake::Task["feeds:fetch"].reenable
       Rake::Task["feeds:fetch"].invoke
-    end
+
+      # Go to articles page after import
+      redirect_to articles_path, notice: "OPML imported and feeds fetched successfully."
+
   end
 end
