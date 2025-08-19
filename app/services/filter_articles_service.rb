@@ -1,7 +1,7 @@
 class FilterArticlesService
     def self.call
         filters = Filter.all.to_a
-        
+
         Article.find_each do |article|
             process_article(article, filters)
         end
@@ -15,9 +15,9 @@ class FilterArticlesService
                 filter: matching_filter
             )
             if matching_filter
-                puts "Filtered: #{article.feed.name} - #{article.title} - Filter: #{matching_filter.name}"
+                puts "Filtered: #{article.feed.name} - #{article.title} - Filter: #{matching_filter.term}"
             else
-               puts "Unfiltered: #{article.feed.name} - #{article.title}"
+                puts "Unfiltered: #{article.feed.name} - #{article.title}"
             end
         else
           # Optionally log unchanged articles

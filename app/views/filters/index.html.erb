@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Filters" %>
 
 <div class="page_header filter_header">
@@ -9,6 +7,24 @@
   </div>
 </div>
 <div id="filters" class="filters">
+  <div class="filters_item">
+    <div class="filters_item_info">
+      <!-- There has to be a better way to do this... --> 
+      (#)
+    </div>
+    <div class="filters_item_term">
+      term
+    </div>
+    <div class="filters_item_title">
+      in_title
+    </div>
+    <div class="filters_item_description">
+      in_desc
+    </div>
+    <div class="filters_item_show">
+      show
+    </div>
+  </div>
   <% @filters.each do |filter| %>
     <%#= render filter %>
     <div class="filters_item">
