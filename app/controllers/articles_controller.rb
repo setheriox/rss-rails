@@ -163,12 +163,26 @@ class ArticlesController < ApplicationController
     articles = Article.includes(:feed)
                       .where(filtered: false)
                       .order(published: :desc, id: :desc)
-    
-    # Filter to unread if parameter is set
-    articles = articles.where(read: false) if params[:unread].present?
 
-    # Keep starred filtering
-    articles = articles.where(starred: true) if params[:starred].present?
+    # Apply category filter if present
+    if params[:category_id].present?
+      articles = articles.joins(:feed).where(feeds: { category_id: params[:category_id] })
+    end
+
+    # Apply feed filter if present  
+    if params[:feed_id].present?
+      articles = articles.joins(:feed).where(articles: { feed_id: params[:feed_id] })
+    end
+
+    # Apply starred filter if present
+    if params[:starred].present?
+      articles = articles.where(starred: true)
+    end
+
+    # Apply unread filter if present
+    if params[:unread].present?
+      articles = articles.where(read: false)
+    end
 
     # Pagination
     page_articles = articles.page(params[:page])
@@ -179,14 +193,15 @@ class ArticlesController < ApplicationController
     # Preserve parameters in redirect...
     redirect_to articles_path(
       page: params[:page], 
-      category_id: params[:category_id], 
+      category_id: params[:category_id],
+      feed_id: params[:feed_id], 
       starred: params[:starred],
       unread: params[:unread]),
       notice: "All items on current page have been marked as read."
   
   end
   
-private
+  private
   def set_article
     @article = Article.find(params.expect(:id))
   end

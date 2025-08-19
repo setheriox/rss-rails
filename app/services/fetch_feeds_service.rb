@@ -23,7 +23,7 @@ class FetchFeedsService
 
   def self.fetch_feed(feed, filters)
     begin
-      xml = URI.open(feed.url, read_timeout: 10, open_timeout: 5).read
+      xml = URI.parse(feed.url).open(read_timeout: 10, open_timeout: 5).read
       parsed = Feedjira.parse(xml)
 
       parsed.entries.each do |entry|

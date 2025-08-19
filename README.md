@@ -5,7 +5,7 @@ This is my first real rails project. Still very much a work in progress.
 ### To-Do List:
  - ~~Allow OPML imports~~
  - ~~Add Categories filtering on articles view~~
- - Marking Items as Read on Page for Filtered Articles
+ - ~~Marking Items as Read on Page for Filtered Articles~~
  - A lot more work on css (Styling)
  - Settings page
  - User Login
