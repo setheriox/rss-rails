@@ -107,8 +107,8 @@ a:hover {
   display: flex;
   justify-content: flex-start;
   max-width: 1200px;
-  margin: 0 auto 16px;
-  padding: 8px 12px;
+  margin: 0 auto 4px;
+  padding: var(--entry-padding);
   background-color: #111;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
@@ -150,6 +150,7 @@ a:hover {
   overflow: hidden;
 }
 .articles-category-list, .articles-feed-list {
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -319,7 +320,9 @@ a:hover {
 .articles-buttons-container {
 
   display: flex;
-  gap: 1rem;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 5px;
 }
 /* =============================================================================
    Pagination COMPONENTS
@@ -327,7 +330,7 @@ a:hover {
 
 .pagination-container {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 4px auto;
   text-align: center;
 }
 
@@ -401,16 +404,16 @@ a:hover {
   font-weight: bold;
 }
 .filters_item_term {
-  width: 50%;
+  width: 40%;
   text-align: left;
 }
 .filters_item_title {
-  width: 10%;
+  width: 15%;
   text-align: center;
 }
 
 .filters_item_description {
-  width: 10%;
+  width: 15%;
   text-align: center;
 }
 
@@ -687,8 +690,7 @@ a:hover {
 
   .navbar {
     flex-wrap: wrap;
-    margin: 0 auto 12px;
-    padding: 6px 8px;
+    margin: 0 auto 2px;
   }
 
   .navbar-item {

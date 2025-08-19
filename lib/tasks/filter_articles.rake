@@ -1,8 +1,7 @@
-namespace :feeds do
-  desc "Fetch all RSS feeds and create articles"
-  task fetch: :environment do
-    puts "Starting feed fetch..."
-    FetchFeedsService.call
-    puts "Feed fetch completed!"
+namespace :filter do
+  desc "Run the FilterArticlesService on all articles"
+  task articles: :environment do
+    FilterArticlesService.call
+    puts "Filtering complete."
   end
 end

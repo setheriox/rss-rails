@@ -26,6 +26,10 @@ class ArticlesController < ApplicationController
       @articles = @articles.where(starred: true)
     end
 
+    if params[:unread].present?
+      @articles = @articles.where(read: false) 
+    end
+
     @articles = @articles.page(params[:page])
 
     # Get All Categories and Feeds
@@ -159,16 +163,25 @@ class ArticlesController < ApplicationController
     articles = Article.includes(:feed)
                       .where(filtered: false)
                       .order(published: :desc, id: :desc)
-  
-    if params[:category_id].present?
-      articles = articles.where(starred: true)
-    end
+    
+    # Filter to unread if parameter is set
+    articles = articles.where(read: false) if params[:unread].present?
 
+    # Keep starred filtering
+    articles = articles.where(starred: true) if params[:starred].present?
+
+    # Pagination
     page_articles = articles.page(params[:page])
 
+    # Mark as read
     page_articles.update_all(read: true)
 
-    redirect_to articles_path(page: params[:page], category_id: params[:category_id], starred: params[:starred]),
+    # Preserve parameters in redirect...
+    redirect_to articles_path(
+      page: params[:page], 
+      category_id: params[:category_id], 
+      starred: params[:starred],
+      unread: params[:unread]),
       notice: "All items on current page have been marked as read."
   
   end
