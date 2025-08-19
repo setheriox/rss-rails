@@ -86,6 +86,11 @@ class OpmlController < ApplicationController
 
       # Save the feed!!!
       feed.save!
+
+      # Fetch the articles from the feeds :)
+      Rails.application.load_tasks unless Rake::Task.task_defined?("feeds:fetch")
+      Rake::Task["feeds:fetch"].reenable
+      Rake::Task["feeds:fetch"].invoke
     end
   end
 end
