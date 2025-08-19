@@ -3,9 +3,10 @@
 This is my first real rails project. Still very much a work in progress.
 
 ### To-Do List:
- - Allow OPML imports
+ - ~~Allow OPML imports~~
+ - ~~Add Categories filtering on articles view~~
+ - Marking Items as Read on Page for Filtered Articles
  - A lot more work on css (Styling)
- - Add Categories filtering on articles view
  - Settings page
  - User Login
 
@@ -23,24 +24,17 @@ This is my first real rails project. Still very much a work in progress.
 1. **Install dependencies**:
    ```bash
    bundle install
-   ```
-
-2. **Database setup**:
-   ```bash
-   rails db:setup
-   ```
-3. **Import Sample Feeds/Categories/Filters**
-   ```bash
-   rails db:seed
-   ```
-4. **Start the server**:
-   ```bash
+   rails db:migrate
    rails server
    ```
-5. **Automation**:
+2. **Automation**:
    Work in progress, for time being im using a crontab that calls the following everything 30 minutes
    ```bash
-   rails feeds:fetch
+   rake feeds:fetch
+   ```
+
+   ```crontab
+   */30 * * * * cd {root_dir} && {root_dir}/bin/bundle exec rake feeds:fetch >> {root_dir}/log/cron.log 2>&1
    ```
 
 
@@ -60,12 +54,11 @@ This command runs the `FetchFeedsService` which:
 
 ## Content Filtering
 
-The application includes a filtering system with pre-configured rules to remove promotional content, deals, and spam. Filters can target article titles and/or descriptions.
+The application includes a filtering system. Filters can target article titles and/or descriptions.
 
 Example filters:
 - "promo", "coupon", "discount" - removes promotional content
 - "best deals", "save off" - removes deal-focused articles
-- "#shorts" - removes YouTube shorts
 
 ## Models
 
@@ -73,6 +66,7 @@ Example filters:
 - **Article** - Individual feed articles
 - **Filter** - Content filtering rules
 - **Category** - Article categorization
+- **OPML** - OPML Import
 
 ## Testing
 
@@ -83,4 +77,3 @@ rspec
 # The application includes validations testing
 # Note: Currently needs more comprehensive test coverage
 ```
-
