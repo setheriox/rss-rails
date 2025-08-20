@@ -24,5 +24,24 @@ class DashboardController < ApplicationController
     @unread_articles = Article.where(read: false).count
     @starred_articles = Article.where(starred: true).count
     @filtered_articles = Article.where(filtered: true).count
+
+    @feed_activity = Feed.joins(:articles).group("feeds.name").count
+
+    # Most Active Feeds (24 hours)
+    @feeds_24h = Feed.joins(:articles)
+                    .where('articles.published >= ?', 24.hours.ago)
+                    .group('feeds.name')
+                    .order('COUNT(articles.id) DESC')
+                    .limit(5)
+                    .count
+
+    # Most Active Feeds (All Time)
+    @feeds_all_time = Feed.joins(:articles)
+                          .group('feeds.name')
+                          .order('COUNT(articles.id) DESC')
+                          .limit(5)
+                          .count
+
+
   end
 end
