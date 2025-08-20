@@ -43,6 +43,81 @@
   --dash-main-gap: 24px;
 }
 
+/* Button Updated Style */
+
+.articles_header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+.articles-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.div-btn {
+    padding: 10px;
+    border-radius: 6px;
+    height: 25px;
+    width: 150px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    font-size: 10pt;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    font-family: inherit;
+    line-height: 1.4;
+}
+
+/* Remove form/button specific styling */
+.div-btn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Ensure nested elements inherit styling */
+.div-btn form,
+.div-btn button,
+.div-btn a {
+    all: unset;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Hide form inputs */
+.div-btn input[type="hidden"] {
+    display: none;
+}
+.div-btn-ghost {
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+.div-btn-ghost:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-1px);
+}
+.div-btn a,
+.div-btn a:hover,
+.div-btn a:link,
+.div-btn a:visited {
+  text-decoration: none;
+  font-weight: normal;
+  color: #fff;
+}
 
 /* =============================================================================
    BASE STYLES
@@ -105,7 +180,7 @@ a:hover {
 
 .navbar {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   max-width: 1200px;
   margin: 0 auto 4px;
   padding: var(--entry-padding);
@@ -114,12 +189,54 @@ a:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
-.navbar-item {
-  margin-right: 16px;
-  padding: 4px 8px;
-  font-weight: 600;
-}
+ .navbar-item {
+    margin-right: 16px;
+    padding: 4px 8px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
+  .navbar-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .navbar-item:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .navbar-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .navbar-item:hover::after {
+    width: 80%;
+  }
+
+  .navbar-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .navbar-item.active::after {
+    width: 80%;
+  }
 /* =============================================================================
    ARTICLE LIST
    ============================================================================= */
@@ -149,6 +266,56 @@ a:hover {
   cursor: pointer;
   overflow: hidden;
 }
+.articles-category-item,
+  .articles-feed-item {
+    color: var(--surface);
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    padding: var(--entry-padding);
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .articles-category-item:hover,
+  .articles-feed-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .articles-category-item::before,
+  .articles-feed-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .articles-category-item:hover::before,
+  .articles-feed-item:hover::before {
+    left: 100%;
+  }
+.articles-category-list, .articles-feed-list {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
 .articles-category-list, .articles-feed-list {
   margin-top: 5px;
   display: flex;
@@ -187,16 +354,45 @@ a:hover {
 .article_item_header.unread {
   background-color: var(--highlight-blue) !important;
 }
-
 .article_item_name {
-  background: var(--accent);
-  color: #000;
-  border-radius: var(--border-radius);
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
+    background: var(--accent);
+    color: #000;
+    border-radius: var(--border-radius);
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article_item_name:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.1);
+  }
+
+  .article_item_name::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.4s ease;
+  }
+
+  .article_item_name:hover::before {
+    left: 100%;
+  }
 .article_item_name span {
   padding: 0 4px; 
   white-space: nowrap;
@@ -263,67 +459,8 @@ a:hover {
 }
 
 
-.articles_header {
-  display: flex;
-  flex-direction: column;
-}
 
-.articles_button {
-  
-}
 
-/* Style all button classes consistently */
-.btn_mark_read, 
-.btn_show_all, 
-.btn_starred_only {
-  display: inline-block;
-  width: 100%;
-  padding: var(--btn-padding);
-  text-align: center;
-  text-decoration: none;
-  background-color: var(--link-primary);
-  color: white;
-  border: 1px solid #007bff;
-  border-radius: 4px;
-  font-size: var(--font-size-s);
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-.btn_mark_read:hover, 
-.btn_show_all:hover, 
-.btn_starred_only:hover {
-  background-color: var(--link-hover);
-  border-color: var(--link-hover-border)
-}
-
-/* Ensure form buttons (button_to) don't have extra spacing */
-.btn_mark_read {
-  margin: 0;
-}
-
-/* Make sure form styling doesn't interfere */
-.articles_button form {
-  margin: 0;
-  width: 100%;
-}
-.artcles_button,
-.artcles_button a,
-.articles_button a:hover,
-.articles_button a:visited,
-.btn_mark_read,
-.btn_mark_read:hover {
-  color: var(--text-primary);
-  font-weight: normal;
-  text-decoration: none;
-}
-.articles-buttons-container {
-
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 5px;
-}
 /* =============================================================================
    Pagination COMPONENTS
    ============================================================================= */

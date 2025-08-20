@@ -3,7 +3,7 @@
 <% content_for :title, "Articles" %>
 
   <div class="articles-buttons-container">
-    <div class="articles_button">
+    <div class="div-btn div-btn-ghost">
       <%= button_to "Mark Page as Read", mark_page_read_articles_path(
             page: params[:page], 
             category_id: params[:category_id], 
@@ -11,44 +11,44 @@
             starred: params[:starred],
             unread: params[:unread]),
           method: :patch,
-          class: "btn_mark_read" %>
+          class: "div-btn" %>
     </div>
-    <div class="articles_button">
+    <div class="div-btn div-btn-ghost">
       <%= button_to "Mark All as Read",
           mark_all_read_articles_path,
           method: :patch,
-          class: "btn_mark_read" %>
+          class: "" %>
     </div>
-    <div class="articles_button">
+    <div class="div-btn div-btn-ghost">
       <% if params[:starred].present? %>
         <%= link_to "Show All", articles_path(
             category_id: params[:category_id],
             feed_id: params[:feed_id],
             unread: params[:unread]
-            ), class: "btn_starred_only" %>
+            ), class: "div-btn div-btn-ghost" %>
       <% else %>
         <%= link_to "Show Starred", articles_path(
             category_id: params[:category_id],
             feed_id: params[:feed_id],
             unread: params[:unread],
             starred: true
-            ), class: "btn_starred_only" %>
+            ), class: "div-btn div-btn-ghost" %>
       <% end %>
     </div>
-    <div class="articles_button">
+    <div class="div-btn div-btn-ghost">
       <% if params[:unread].present? %>
         <%= link_to "Show All", articles_path(
             category_id: params[:category_id],
             feed_id: params[:feed_id],
             starred: params[:starred]
-            ), class: "btn_starred_only" %>
+            ), class: "div-btn div-btn-ghost" %>
       <% else %>
         <%= link_to "Show Unread", articles_path(
             category_id: params[:category_id],
             feed_id: params[:feed_id],
             starred: params[:starred],
             unread: true
-            ), class: "btn_starred_only" %>
+            ), class: "div-btn div-btn-ghost" %>
       <% end %>
     </div>
   </div>
