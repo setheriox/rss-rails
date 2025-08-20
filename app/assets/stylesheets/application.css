@@ -118,7 +118,15 @@
   font-weight: normal;
   color: #fff;
 }
-
+a,
+a:hover,
+a:link,
+a:active,
+a:visited {
+  text-decoration: none;
+  font-weight: normal;
+  color: #08b;
+}
 /* =============================================================================
    BASE STYLES
    ============================================================================= */
@@ -136,20 +144,6 @@ body {
   color: #fff;
 }
 
-a,
-a:visited,
-a:active,
-a:hover {
-  color: #6bf;
-  text-decoration: none;
-  transition: color 0.25s ease;
-}
-
-a:hover {
-  color: #9cf;
-  text-decoration: underline;
-  font-weight: bold;
-}
 
 /* ============================================================================= */
 /* LAYOUT                                                                        */
