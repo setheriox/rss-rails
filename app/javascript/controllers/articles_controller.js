@@ -10,21 +10,21 @@ export default class extends Controller {
 
   toggleStar(event) {
     const articleId = event.target.dataset.articleId
-    
+
     // There may be a better way to do this, I should revist this when I can...
     const titleElement = event.target.closest('.article_item').querySelector('.article_item_title')
 
     this.makeRequest(`/articles/${articleId}/toggle_starred`)
       .then(data => {
-        if(data.success) {
-          this.updateStar(event.target, titleElement, data)  
+        if (data.success) {
+          this.updateStar(event.target, titleElement, data)
         } else {
           console.log("Error toggling starred status: " + data.errors.join(', '))
         }
       })
-    .catch(error => {  
-      console.error('Error:', error)
-    })
+      .catch(error => {
+        console.error('Error:', error)
+      })
   }
 
   toggleRead(event) {
@@ -32,17 +32,17 @@ export default class extends Controller {
     const titleElement = event.target.closest('.article_item').querySelector('.article_item_title')
 
     this.makeRequest(`/articles/${articleId}/toggle_read`)
-    .then(data => {
-      if (data.success) {
-        this.updateReadStatus(event.target, titleElement, data);
-      } else {
-        alert('Error toggling read status: ' + data.errors.join(', '));
-      }
-    })
-    .catch(error => {
+      .then(data => {
+        if (data.success) {
+          this.updateReadStatus(event.target, titleElement, data);
+        } else {
+          alert('Error toggling read status: ' + data.errors.join(', '));
+        }
+      })
+      .catch(error => {
         console.error('Error:', error);
         alert('Network error occurred');
-    })
+      })
   }
 
   // Click on title to show/hide the article preview
@@ -53,33 +53,39 @@ export default class extends Controller {
     // Get the Read Button so it can be changed as well
     const readButton = feedItem.querySelector('.article_item_read')
 
-    console.log('Current display:', descriptionElement.style.display)
+    // Hide all other descriptions before opening this one
+    this.closeAllExcept(descriptionElement)
 
-    // If it's hidden or has no style set (default hidden)
     if (descriptionElement.style.display === 'none' || descriptionElement.style.display === '') {
-      console.log('Setting display to: block')
-      
-      // Set the description to block so it displays when clicked
       descriptionElement.style.display = 'block'
-      
+
       // Auto-mark as read when someone actually opens it to read
-      if(readButton.dataset.read === 'false') {
+      if (readButton.dataset.read === 'false') {
         const articleId = readButton.dataset.articleId
         this.makeRequest(`/articles/${articleId}/toggle_read`)
-        .then(data => {
-          if(data.success) {
-            // Change the read icon and background color when opening
-            this.updateReadStatus(readButton, event.target, data)
-          } else {
-            console.log('Error marking article as read: ' + data.errors.join(', '))
-          }
-        })
+          .then(data => {
+            if (data.success) {
+              this.updateReadStatus(readButton, event.target, data)
+            } else {
+              console.log('Error marking article as read: ' + data.errors.join(', '))
+            }
+          })
       }
     } else {
-      // Hide the article contents if it is already opened and clicked again
+      // Hide the article contents if clicked again
       descriptionElement.style.display = 'none'
     }
   }
+
+  // Helper to close all descriptions except the current one
+  closeAllExcept(currentElement) {
+    document.querySelectorAll('.article_item_description').forEach(el => {
+      if (el !== currentElement) {
+        el.style.display = 'none'
+      }
+    })
+  }
+
 
   // No more fetch code everywhere! It has it's own place! 
   async makeRequest(url) {
@@ -92,7 +98,7 @@ export default class extends Controller {
     return await response.json()
   }
 
-  
+
   // Update the star icon - filled vs empty
   updateStar(toggleButton, titleElement, data) {
     console.log("Updating star status to: " + data.starred)
