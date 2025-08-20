@@ -32,15 +32,16 @@ class ArticlesController < ApplicationController
 
     @articles = @articles.page(params[:page])
 
-    # Get All Categories and Feeds
-    @categories = Category.left_joins(:feeds)
-                          .select("categories.*, COUNT(feeds.id) AS feeds_count")
-                          .group("categories.id")
-                          .order(name: :asc)
+
+   @categories = ordered_categories
+
+
+
     if params[:category_id].present?
       @selected_category = Category.find(params[:category_id])
       @feeds_in_category = @selected_category.feeds.order(:name)
     end
+
   end
 
   # GET /articles/1 or /articles/1.json
@@ -209,5 +210,35 @@ class ArticlesController < ApplicationController
   def article_params
     params.expect(article: [ :feed_id, :title, :description, :url, :published, :read, :starred, :filtered ])
   end
-end
 
+  def ordered_categories
+    #########################################
+    # Get All Categories and nake sure
+    # Uncategorized is at the end of the list
+    ##########################################
+    # Get All Categories and Feeds
+    categories = Category.left_joins(:feeds)
+                          .select("categories.*, COUNT(feeds.id) AS feeds_count")
+                          .group("categories.id")
+                          .order(name: :asc)
+
+    # Create blank category list for a sorted list 
+    category_list = []
+    uncategorized = nil
+
+    # Cycle through each category
+    categories.each do |category|
+      if category.name != "Uncategorized"
+        category_list << category
+      else
+        uncategorized = category
+      end
+    end
+
+    # Add Uncategorized to the end of the list (if it exists)
+    category_list << uncategorized if uncategorized
+
+    # Replace @categories with the reordered version
+    category_list
+  end
+end
