@@ -17,6 +17,7 @@ class Article < ApplicationRecord
     doc.to_html
   end
 
+  # Essentially a duplicate method, using it for readability while working on it
   def sanitized_description
     self.class.sanitize_content(description)
   end

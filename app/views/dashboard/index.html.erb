@@ -14,22 +14,22 @@
       <div class="stat-item">
         <div class="stat-label">Read</div>
         <div class="stat-value"><%= @read_articles %></div>
-        <div class="stat-bar" style="--percent: <%= (@read_articles.to_f / @total_articles * 100).round %>%"></div>
+        <div class="stat-bar" style="--percent: <%= @total_articles > 0 ? (@read_articles.to_f / @total_articles * 100).round : 0 %>%"></div>
       </div>
       <div class="stat-item">
         <div class="stat-label">Unread</div>
         <div class="stat-value"><%= @unread_articles %></div>
-        <div class="stat-bar" style="--percent: <%= (@unread_articles.to_f / @total_articles * 100).round %>%"></div>
+        <div class="stat-bar" style="--percent: <%= @total_articles > 0 ? (@unread_articles.to_f / @total_articles * 100).round : 0 %>%"></div>
       </div>
       <div class="stat-item">
         <div class="stat-label">Starred</div>
         <div class="stat-value"><%= @starred_articles %></div>
-        <div class="stat-bar" style="--percent: <%= (@starred_articles.to_f / @total_articles * 100).round %>%"></div>
+        <div class="stat-bar" style="--percent: <%= @total_articles > 0 ? (@starred_articles.to_f / @total_articles * 100).round : 0 %>%"></div>
       </div>
       <div class="stat-item">
         <div class="stat-label">Filtered</div>
         <div class="stat-value"><%= @filtered_articles %></div>
-        <div class="stat-bar" style="--percent: <%= (@filtered_articles.to_f / @total_articles * 100).round %>%"></div>
+        <div class="stat-bar" style="--percent: <%= @total_articles > 0 ? (@filtered_articles.to_f / @total_articles * 100).round : 0 %>%"></div>
       </div>
     </div>
   </div>
@@ -68,7 +68,7 @@
       <div class="activity-item">
         <div class="feed-name"><%= feed_name %></div>
         <div class="feed-bar-container">
-          <div class="feed-bar" style="--width: <%= ((count.to_f / @feeds_24h.values.max) * 100).round %>%"></div>
+          <div class="feed-bar" style="--width: <%= (@feeds_24h.values.max && @feeds_24h.values.max > 0) ? ((count.to_f / @feeds_24h.values.max) * 100).round : 0 %>%"></div>
         </div>
         <div class="feed-count"><%= count %></div>
       </div>
@@ -81,7 +81,7 @@
       <div class="activity-item">
         <div class="feed-name"><%= feed_name %></div>
         <div class="feed-bar-container">
-          <div class="feed-bar" style="--width: <%= ((count.to_f / @feeds_all_time.values.max) * 100).round %>%"></div>
+          <div class="feed-bar" style="--width: <%= (@feeds_all_time.values.max && @feeds_all_time.values.max > 0) ? ((count.to_f / @feeds_all_time.values.max) * 100).round : 0 %>%"></div>
         </div>
         <div class="feed-count"><%= count %></div>
       </div>
