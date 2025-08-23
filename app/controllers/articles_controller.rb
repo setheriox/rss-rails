@@ -33,7 +33,8 @@ class ArticlesController < ApplicationController
     @articles = @articles.page(params[:page])
 
 
-   @categories = ordered_categories
+   @categories = ordered_categories_with_counts
+   @total_unread = Article.where(read: false, filtered: false).count
 
 
 
@@ -209,6 +210,47 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.expect(article: [ :feed_id, :title, :description, :url, :published, :read, :starred, :filtered ])
+  end
+
+  def ordered_categories_with_counts
+    #########################################
+    # Get All Categories and make sure
+    # Uncategorized is at the end of the list
+    ##########################################
+    
+    # Get all categories with their feeds and unread counts
+    categories = Category.includes(feeds: :articles)
+                        .order(name: :asc)
+
+    # Calculate unread counts for each category and feed
+    categories.each do |category|
+      category.instance_variable_set(:@unread_count, 
+        category.feeds.sum { |feed| feed.articles.where(read: false, filtered: false).count })
+      
+      category.feeds.each do |feed|
+        feed.instance_variable_set(:@unread_count,
+          feed.articles.where(read: false, filtered: false).count)
+      end
+    end
+
+    # Create blank category list for a sorted list 
+    category_list = []
+    uncategorized = nil
+
+    # Cycle through each category
+    categories.each do |category|
+      if category.name != "Uncategorized"
+        category_list << category
+      else
+        uncategorized = category
+      end
+    end
+
+    # Add Uncategorized to the end of the list (if it exists)
+    category_list << uncategorized if uncategorized
+
+    # Replace @categories with the reordered version
+    category_list
   end
 
   def ordered_categories

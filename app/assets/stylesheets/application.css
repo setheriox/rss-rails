@@ -45,18 +45,97 @@
 
 /* Button Updated Style */
 
-.articles_header {
+.article_page {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 5px;
+  height: calc(100vh - 100px);
+  overflow: hidden;
 }
 
-.articles-buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
+.menu-container {
+  width: 170px;
+  background-color: #121212;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: var(--primary) rgba(0, 0, 0, 0.2);
+padding-right: 10px;
 }
 
+.article_body {
+  flex: 1;
+  overflow-y: auto;
+  background: #1e1e1e;
+}
+.feed-sidebar {
+  background-color: var(--surface);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+    
+}
+.menu-container a {
+    color: #000;
+}
+.menu-button-div {
+    margin-top: 3px;
+    margin-bottom: 2px;
+}
+.menu-buttons {
+    text-align: center;
+}
+.menu-list {}
+.menu-list-item {
+}
+.menu-list-category {
+    margin-left: 1rem;
+    padding: 4px;
+    font-weight: bold;
+    border-radius: 12px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu-list-category a {
+
+    font-weight: bold;
+    font-size: 12pt;
+}
+.menu-list-feed {
+    margin-left: 2rem;
+    border-radius: 12px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.unread-count {
+    font-weight: bold;
+    font-size: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 1px 6px;
+    min-width: 16px;
+    text-align: center;
+    color: #000;
+}
+.menu-list-text {
+  width: 90%;
+  display: flex;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu-list-text a,
+.menu-list-text a:link,
+.menu-list-text a:hover,
+.menu-list-text a:visited {
+  color: #000;
+}
 .div-btn {
   padding: 10px;
   border-radius: 6px;

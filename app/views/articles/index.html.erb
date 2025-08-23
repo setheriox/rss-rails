@@ -1,139 +1,160 @@
+<style>
+
+</style>
 <p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Articles" %>
-
-  <div class="articles-buttons-container">
-    <div class="div-btn div-btn-ghost">
-      <%= button_to "Mark Page as Read", mark_page_read_articles_path(
-            page: params[:page], 
-            category_id: params[:category_id], 
-            feed_id: params[:feed_id],
-            starred: params[:starred],
-            unread: params[:unread]),
-          method: :patch,
-          class: "div-btn" %>
-    </div>
-    <div class="div-btn div-btn-ghost">
-      <%= button_to "Mark All as Read",
-          mark_all_read_articles_path,
-          method: :patch,
-          class: "" %>
-    </div>
-    <div class="div-btn div-btn-ghost">
-      <% if params[:starred].present? %>
-        <%= link_to "Show All", articles_path(
-            category_id: params[:category_id],
-            feed_id: params[:feed_id],
-            unread: params[:unread]
-            ), class: "div-btn div-btn-ghost" %>
-      <% else %>
-        <%= link_to "Show Starred", articles_path(
-            category_id: params[:category_id],
-            feed_id: params[:feed_id],
-            unread: params[:unread],
-            starred: true
-            ), class: "div-btn div-btn-ghost" %>
-      <% end %>
-    </div>
-    <div class="div-btn div-btn-ghost">
-      <% if params[:unread].present? %>
-        <%= link_to "Show All", articles_path(
-            category_id: params[:category_id],
-            feed_id: params[:feed_id],
-            starred: params[:starred]
-            ), class: "div-btn div-btn-ghost" %>
-      <% else %>
-        <%= link_to "Show Unread", articles_path(
-            category_id: params[:category_id],
-            feed_id: params[:feed_id],
-            starred: params[:starred],
-            unread: true
-            ), class: "div-btn div-btn-ghost" %>
-      <% end %>
-    </div>
-  </div>
-<div class="articles_header">
-
-  <div class="articles-category-list">
-    <div class="articles-category-item" style="background-color: #666;">
-      <%= link_to "All Categories", articles_path %>
-    </div>
-    <% @categories.each do |category| %>
-      <div class="articles-category-item" style="background-color: <%= category.color%>">
-        <%= link_to category.name, articles_path(category_id: category.id) %>
+<div class="article_page">
+  <div class="menu-container">
+      <div class="menu-buttons">
+          <div class="menu-button-div">
+              <div class="div-btn div-btn-ghost">
+              <%= button_to "Mark Page as Read", mark_page_read_articles_path(
+                      page: params[:page], 
+                      category_id: params[:category_id], 
+                      feed_id: params[:feed_id],
+                      starred: params[:starred],
+                      unread: params[:unread]),
+                  method: :patch,
+                  class: "div-btn" %>
+              </div>
+          </div>
+          <div class="menu-button-div">
+              <div class="div-btn div-btn-ghost">
+              <%= button_to "Mark All as Read",
+                  mark_all_read_articles_path,
+                  method: :patch,
+                  class: "" %>
+              </div>
+          </div>
+          <div class="menu-button-div">
+              <div class="div-btn div-btn-ghost">
+              <% if params[:starred].present? %>
+                  <%= link_to "Toggle Starred", articles_path(
+                      category_id: params[:category_id],
+                      feed_id: params[:feed_id],
+                      unread: params[:unread]
+                      ), class: "div-btn div-btn-ghost" %>
+              <% else %>
+                  <%= link_to "Toggle Starred", articles_path(
+                      category_id: params[:category_id],
+                      feed_id: params[:feed_id],
+                      unread: params[:unread],
+                      starred: true
+                      ), class: "div-btn div-btn-ghost" %>
+              <% end %>
+              </div>
+          </div>
+          <div class="menu-button-div">
+                  <div class="div-btn div-btn-ghost">
+              <% if params[:unread].present? %>
+                  <%= link_to "Toggle Unread", articles_path(
+                      category_id: params[:category_id],
+                      feed_id: params[:feed_id],
+                      starred: params[:starred]
+                      ), class: "div-btn div-btn-ghost" %>
+              <% else %>
+                  <%= link_to "Toggle Unread", articles_path(
+                      category_id: params[:category_id],
+                      feed_id: params[:feed_id],
+                      starred: params[:starred],
+                      unread: true
+                      ), class: "div-btn div-btn-ghost" %>
+              <% end %>
+              </div>
+          </div>
       </div>
-    <% end %>
-  </div>
-  
-  <% if @selected_category.present? %>
-    <div class="articles-feed-list">
-      <% @feeds_in_category.each do |feed| %>
-        <div class="articles-feed-item" style="background-color: <%= @selected_category.color %>">
-          <%= link_to feed.name, articles_path(category_id: @selected_category.id, feed_id: feed.id) %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
 
-  <div class="pagination-container">
-    <%= paginate @articles %>
-  </div>
+      <div class="menu-list">
+          <div class="menu-list-item">
+              <div class="menu-list-category" style="background-color: #666;">
+               
+            <div class="menu-list-text">   <%= link_to "All Categories", articles_path %>
+              </div>  
+              <div class="unread-count"><%= @total_unread %></div>
+            </div>
+            <% @categories.each do |category| %>
+                <div class="menu-list-category" style="background-color: <%= category.color%>">
+                    <div class="menu-list-text">
+                      <%= link_to category.name, articles_path(category_id: category.id) %>
+                    </div>
+                    <div class="unread-count"><%= category.unread_count %></div>
+                </div>
+                <% category.feeds.each do |feed| %>
+                      <div class="menu-list-feed" style="background-color: <%= category.color %>">
+                        <div class="menu-list-text">
+                          <%= link_to feed.name, articles_path(category_id: category.id, feed_id: feed.id) %>
+                      </div>
+                      
+                        <div class="unread-count"><%= feed.unread_count %></div>
+                    </div>
+                <% end %>
 
-</div>
-<div id="articles" data-controller="articles">
-  <% @articles.each do |article| %>
-  <div class="article_item">
-
-    <% if article.read == true %>
-      <div class="article_item_header" data-article-id="<%= article.id %>" >
-    <% else %>
-      <div class="article_item_header unread" data-article-id="<%= article.id %>" >
-    <% end %>
-
-      <div class="article_item_starred" style="cursor: pointer;" data-article-id="<%= article.id %>" data-starred="<%= article.starred %>" data-action="click->articles#toggleStar">
-        <% if article.starred == true %>
-          &#x02B50;
-        <% else %>
-          &#9734;
-        <% end %>
+              <% end %>
+          </div>
       </div>
-      <div class="article_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>" data-action="click->articles#toggleRead">
+
+  </div>
+  <div class="article_body">
+    <div class="pagination-container">
+      <%= paginate @articles %>
+    </div>
+
+    <div id="articles" data-controller="articles">
+      <% @articles.each do |article| %>
+      <div class="article_item">
+
         <% if article.read == true %>
-          ✓
+          <div class="article_item_header" data-article-id="<%= article.id %>" >
         <% else %>
-          ◯ 
+          <div class="article_item_header unread" data-article-id="<%= article.id %>" >
         <% end %>
-      </div>
+
+          <div class="article_item_starred" style="cursor: pointer;" data-article-id="<%= article.id %>" data-starred="<%= article.starred %>" data-action="click->articles#toggleStar">
+            <% if article.starred == true %>
+              &#x02B50;
+            <% else %>
+              &#9734;
+            <% end %>
+          </div>
+          <div class="article_item_read" style="cursor: pointer;" data-article-id="<%= article.id %>" data-read="<%= article.read %>" data-action="click->articles#toggleRead">
+            <% if article.read == true %>
+              ✓
+            <% else %>
+              ◯ 
+            <% end %>
+          </div>
 
 
-      <div class="article_item_name" style="background-color: <%= article.feed.category.color %>">
-        <span><%= article.feed.name %></span>
-      </div>
+          <div class="article_item_name" style="background-color: <%= article.feed.category.color %>">
+            <span><%= article.feed.name %></span>
+          </div>
 
-      <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>; cursor: pointer;" data-action="click->articles#showDescription">
-        <%= article.title %>
-      </div>
-      <div class="article_item_url">
-        <%= article.url %>
-      </div>
-      <div class="article_item_published">
-        <%= article.published.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M") %>
-      </div>
-      <!-- <div class="article_item_filtered"> -->
-      <%#= article.filtered %>
-      <!-- </div> -->
-      </div>
-      <div class="article_item_body">
-        <div class="article_item_description" style="display: none;">
-          <%= (article.sanitized_description || "No description available").html_safe %>
-          <br />
-          <br />
-          <a href="<%= article.url %>" target="_blank">*Visit Full Article*</a>
+          <div class="article_item_title" style="font-weight: <%= article.read ? 'normal' : 'bold' %>; cursor: pointer;" data-action="click->articles#showDescription">
+            <%= article.title %>
+          </div>
+          <div class="article_item_url">
+            <%= article.url %>
+          </div>
+          <div class="article_item_published">
+            <%= article.published.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M") %>
+          </div>
+          <!-- <div class="article_item_filtered"> -->
+          <%#= article.filtered %>
+          <!-- </div> -->
+          </div>
+          <div class="article_item_body">
+            <div class="article_item_description" style="display: none;">
+              <%= (article.sanitized_description || "No description available").html_safe %>
+              <br />
+              <br />
+              <a href="<%= article.url %>" target="_blank">*Visit Full Article*</a>
+            </div>
+          </div>
         </div>
+      <% end %>
+      <div class="pagination-container">
+        <%= paginate @articles %>
       </div>
     </div>
-  <% end %>
-  <div class="pagination-container">
-    <%= paginate @articles %>
   </div>
 </div>

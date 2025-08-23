@@ -9,4 +9,8 @@ class Category < ApplicationRecord
     def self.uncategorized
         find_by(name: "Uncategorized")
     end
+
+    def unread_count
+        @unread_count || 0
+    end
 end
