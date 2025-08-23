@@ -139,25 +139,44 @@ export default class extends Controller {
       })
       const data = await response.json()
       
-      // Update total unread count
+      // Update total unread count in both locations
       const totalUnreadElement = document.querySelector('.menu-list-category .unread-count')
       if (totalUnreadElement) {
         totalUnreadElement.textContent = data.total_unread
       }
       
-      // Update category and feed counts
+      // Update "All Categories" count in the new m-category section
+      const allCategoriesElement = document.querySelector('a[href="/articles"]')?.closest('.m-category')?.querySelector('.m-category-unread')
+      if (allCategoriesElement) {
+        allCategoriesElement.textContent = data.total_unread
+      }
+      
+      // Update category and feed counts in both sidebar formats
       data.categories.forEach(category => {
-        // Find category element by looking for link with category_id parameter
+        // Update old sidebar format (menu-list-category)
         const categoryElement = document.querySelector(`a[href*="category_id=${category.id}"]`)?.closest('.menu-list-category')?.querySelector('.unread-count')
         if (categoryElement) {
           categoryElement.textContent = category.unread_count
         }
         
-        // Update feed counts
+        // Update new m-category format
+        const mCategoryElement = document.querySelector(`a[href*="category_id=${category.id}"]`)?.closest('.m-category')?.querySelector('.m-category-unread')
+        if (mCategoryElement) {
+          mCategoryElement.textContent = category.unread_count
+        }
+        
+        // Update feed counts in both formats
         category.feeds.forEach(feed => {
+          // Old format (menu-list-feed)
           const feedElement = document.querySelector(`a[href*="feed_id=${feed.id}"]`)?.closest('.menu-list-feed')?.querySelector('.unread-count')
           if (feedElement) {
             feedElement.textContent = feed.unread_count
+          }
+          
+          // New format (m-feed-item)
+          const mFeedElement = document.querySelector(`a[href*="feed_id=${feed.id}"]`)?.closest('.m-feed-item')?.querySelector('.m-feed-unread')
+          if (mFeedElement) {
+            mFeedElement.textContent = feed.unread_count
           }
         })
       })

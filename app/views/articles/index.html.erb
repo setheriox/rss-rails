@@ -64,34 +64,94 @@
           </div>
       </div>
 
-      <div class="menu-list">
-          <div class="menu-list-item">
-              <div class="menu-list-category" style="background-color: #666;">
-               
-            <div class="menu-list-text">   <%= link_to "All Categories", articles_path %>
-              </div>  
-              <div class="unread-count"><%= @total_unread %></div>
-            </div>
-            <% @categories.each do |category| %>
-                <div class="menu-list-category" style="background-color: <%= category.color%>">
-                    <div class="menu-list-text">
-                      <%= link_to category.name, articles_path(category_id: category.id) %>
-                    </div>
-                    <div class="unread-count"><%= category.unread_count %></div>
-                </div>
-                <% category.feeds.each do |feed| %>
-                      <div class="menu-list-feed" style="background-color: <%= category.color %>">
-                        <div class="menu-list-text">
-                          <%= link_to feed.name, articles_path(category_id: category.id, feed_id: feed.id) %>
-                      </div>
-                      
-                        <div class="unread-count"><%= feed.unread_count %></div>
-                    </div>
-                <% end %>
 
-              <% end %>
-          </div>
+<style>
+
+.m-category-header, .m-feed-item {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1.5rem;
+}
+
+.m-category {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  background: var(--surface);
+  cursor: pointer;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+.m-category-name {
+  padding-left: 0.5rem;
+  font-weight: bold;
+}
+.m-category-name a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.m-feed-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 1rem;
+  
+}
+.m-category-unread {
+  text-align: right;
+}
+.m-category-mark-read {
+  text-align: center;
+}
+.m-feed-unread {
+  text-align: right;
+}
+.m-feed-mark-read {
+  text-align: center;
+}
+.m-feed-section {
+  display: block;
+}
+</style>
+
+<div class="m" data-controller="articles">
+  <div class="m-category-section">
+    <!-- All Categories section -->
+    <div class="m-category">
+      <div class="m-category-header">
+        <div class="m-category-name">
+          <%= link_to "All Categories", articles_path, style: "color: #666;" %>
+        </div>
+        <div class="m-category-unread"><%= @total_unread %></div>
       </div>
+    </div>
+
+    <% @categories.each do |category| %>
+      <div class="m-category">
+        <div class="m-category-header">
+          <div class="m-category-name" style="color: <%= category.color %>">
+            <%= link_to category.name, articles_path(category_id: category.id), style: "color: #{category.color}" %>
+          </div>
+          <div class="m-category-unread"><%= category.unread_count %></div>
+        </div>
+        <div class="m-feed-section">
+          <% category.feeds.each do |feed| %>
+            <div class="m-feed-item">
+              <div class="m-feed-name">
+                <%= link_to feed.name, articles_path(category_id: category.id, feed_id: feed.id), style: "color: #{category.color}" %>
+              </div>
+              <div class="m-feed-unread">
+                <%= feed.unread_count %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+    
+
 
   </div>
   <div class="article_body">
