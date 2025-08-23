@@ -153,6 +153,30 @@ class ArticlesController < ApplicationController
     }, status: :not_found
   end
 
+  # AJAX endpoint to get updated sidebar counts
+  def sidebar_counts
+    categories = ordered_categories_with_counts
+    total_unread = Article.where(read: false, filtered: false).count
+    
+    counts = {
+      total_unread: total_unread,
+      categories: categories.map do |category|
+        {
+          id: category.id,
+          unread_count: category.unread_count,
+          feeds: category.feeds.map do |feed|
+            {
+              id: feed.id,
+              unread_count: feed.unread_count
+            }
+          end
+        }
+      end
+    }
+    
+    render json: counts
+  end
+
   # Button to mark all (unread) items as read
   def mark_all_read
     Article.where(read: false).update_all(read: true)

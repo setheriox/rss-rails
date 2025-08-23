@@ -35,6 +35,7 @@ export default class extends Controller {
       .then(data => {
         if (data.success) {
           this.updateReadStatus(event.target, titleElement, data);
+          this.updateSidebarCounts();
         } else {
           alert('Error toggling read status: ' + data.errors.join(', '));
         }
@@ -66,6 +67,7 @@ export default class extends Controller {
           .then(data => {
             if (data.success) {
               this.updateReadStatus(readButton, event.target, data)
+              this.updateSidebarCounts();
             } else {
               console.log('Error marking article as read: ' + data.errors.join(', '))
             }
@@ -123,6 +125,44 @@ export default class extends Controller {
       // Unread articles are bold and get pretty blue highlighting background
       titleElement.style.fontWeight = 'bold'
       itemHeaderElement.classList.add('unread')
+    }
+  }
+
+  // Update sidebar unread counts after read status changes
+  async updateSidebarCounts() {
+    try {
+      const response = await fetch('/articles/sidebar_counts', {
+        method: 'GET',
+        headers: {
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        }
+      })
+      const data = await response.json()
+      
+      // Update total unread count
+      const totalUnreadElement = document.querySelector('.menu-list-category .unread-count')
+      if (totalUnreadElement) {
+        totalUnreadElement.textContent = data.total_unread
+      }
+      
+      // Update category and feed counts
+      data.categories.forEach(category => {
+        // Find category element by looking for link with category_id parameter
+        const categoryElement = document.querySelector(`a[href*="category_id=${category.id}"]`)?.closest('.menu-list-category')?.querySelector('.unread-count')
+        if (categoryElement) {
+          categoryElement.textContent = category.unread_count
+        }
+        
+        // Update feed counts
+        category.feeds.forEach(feed => {
+          const feedElement = document.querySelector(`a[href*="feed_id=${feed.id}"]`)?.closest('.menu-list-feed')?.querySelector('.unread-count')
+          if (feedElement) {
+            feedElement.textContent = feed.unread_count
+          }
+        })
+      })
+    } catch (error) {
+      console.error('Error updating sidebar counts:', error)
     }
   }
 }

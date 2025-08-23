@@ -47,7 +47,7 @@
 
 .article_page {
   display: flex;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 50px);
   overflow: hidden;
 }
 
@@ -227,6 +227,7 @@ body {
   font-size: var(--font-size);
   background-color: #000;
   color: #fff;
+  overflow: hidden;
 }
 
 ul {
@@ -275,6 +276,7 @@ li {
   background-color: #111;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  height: 32px;
 }
 
 .navbar-item {
@@ -339,7 +341,7 @@ li {
 .article_item_header {
   display: grid;
   width: 100%;
-  grid-template-columns: 25px 25px 120px 1fr 120px 40px;
+  grid-template-columns: 16px 16px 120px 1fr 120px;
   gap: var(--entry-gap);
   height: var(--entry-height);
   /*
@@ -534,6 +536,7 @@ li {
   overflow: hidden;
   white-space: nowrap;
   text-align: right;
+  padding-right: 0.5rem;
 }
 
 /* Hidden elements */
