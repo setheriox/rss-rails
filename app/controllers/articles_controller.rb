@@ -32,11 +32,8 @@ class ArticlesController < ApplicationController
 
     @articles = @articles.page(params[:page])
 
-
    @categories = ordered_categories_with_counts
    @total_unread = Article.where(read: false, filtered: false).count
-
-
 
     if params[:category_id].present?
       @selected_category = Category.find(params[:category_id])
@@ -282,7 +279,6 @@ class ArticlesController < ApplicationController
     # Get All Categories and nake sure
     # Uncategorized is at the end of the list
     ##########################################
-    # Get All Categories and Feeds
     categories = Category.left_joins(:feeds)
                           .select("categories.*, COUNT(feeds.id) AS feeds_count")
                           .group("categories.id")
