@@ -72,6 +72,9 @@ export default class extends Controller {
               console.log('Error marking article as read: ' + data.errors.join(', '))
             }
           })
+          .catch(error => {
+            console.error('Error marking article as read:', error)
+          })
       }
     } else {
       // Hide the article contents if clicked again
@@ -139,44 +142,36 @@ export default class extends Controller {
       })
       const data = await response.json()
       
-      // Update total unread count in both locations
-      const totalUnreadElement = document.querySelector('.menu-list-category .unread-count')
-      if (totalUnreadElement) {
-        totalUnreadElement.textContent = data.total_unread
+      // Update "All Categories" count (first m-category)
+      const allCategoriesUnread = document.querySelector('.m-category:first-child .m-category-unread')
+      if (allCategoriesUnread) {
+        allCategoriesUnread.textContent = data.total_unread
       }
       
-      // Update "All Categories" count in the new m-category section
-      const allCategoriesElement = document.querySelector('a[href="/articles"]')?.closest('.m-category')?.querySelector('.m-category-unread')
-      if (allCategoriesElement) {
-        allCategoriesElement.textContent = data.total_unread
-      }
-      
-      // Update category and feed counts in both sidebar formats
-      data.categories.forEach(category => {
-        // Update old sidebar format (menu-list-category)
-        const categoryElement = document.querySelector(`a[href*="category_id=${category.id}"]`)?.closest('.menu-list-category')?.querySelector('.unread-count')
-        if (categoryElement) {
-          categoryElement.textContent = category.unread_count
+      // Update each category and its feeds
+      const categoryDivs = document.querySelectorAll('.m-category')
+      categoryDivs.forEach((categoryDiv, index) => {
+        // Skip the first one (All Categories)
+        if (index === 0) return
+        
+        const categoryData = data.categories[index - 1]
+        if (!categoryData) return
+        
+        // Update category count
+        const categoryUnread = categoryDiv.querySelector('.m-category-unread')
+        if (categoryUnread) {
+          categoryUnread.textContent = categoryData.unread_count
         }
         
-        // Update new m-category format
-        const mCategoryElement = document.querySelector(`a[href*="category_id=${category.id}"]`)?.closest('.m-category')?.querySelector('.m-category-unread')
-        if (mCategoryElement) {
-          mCategoryElement.textContent = category.unread_count
-        }
-        
-        // Update feed counts in both formats
-        category.feeds.forEach(feed => {
-          // Old format (menu-list-feed)
-          const feedElement = document.querySelector(`a[href*="feed_id=${feed.id}"]`)?.closest('.menu-list-feed')?.querySelector('.unread-count')
-          if (feedElement) {
-            feedElement.textContent = feed.unread_count
-          }
+        // Update feed counts within this category
+        const feedItems = categoryDiv.querySelectorAll('.m-feed-item')
+        feedItems.forEach((feedItem, feedIndex) => {
+          const feedData = categoryData.feeds[feedIndex]
+          if (!feedData) return
           
-          // New format (m-feed-item)
-          const mFeedElement = document.querySelector(`a[href*="feed_id=${feed.id}"]`)?.closest('.m-feed-item')?.querySelector('.m-feed-unread')
-          if (mFeedElement) {
-            mFeedElement.textContent = feed.unread_count
+          const feedUnread = feedItem.querySelector('.m-feed-unread')
+          if (feedUnread) {
+            feedUnread.textContent = feedData.unread_count
           }
         })
       })
