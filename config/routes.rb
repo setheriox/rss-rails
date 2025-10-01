@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "search", to: "search#index", as: :search
   get  "opml",        to: "opml#index",  as: :opml
   get  "opml/export", to: "opml#export", as: :export_opml
   post "opml/import", to: "opml#import", as: :import_opml

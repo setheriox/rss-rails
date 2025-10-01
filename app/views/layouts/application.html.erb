@@ -30,6 +30,9 @@
     <div class="navbar-item <%= 'active' if current_page?(articles_path) %>">
       <%= link_to "Articles", articles_path %>
     </div>
+    <div class="navbar-item <%= 'active' if current_page?(search_path) %>">
+      <%= link_to "Search", search_path %>
+    </div>
     <div class="navbar-item <%= 'active' if current_page?(categories_path) %>">
       <%= link_to "Categories", categories_path %>
     </div>
