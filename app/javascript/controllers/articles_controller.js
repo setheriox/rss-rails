@@ -92,14 +92,26 @@ export default class extends Controller {
   }
 
 
-  // No more fetch code everywhere! It has it's own place! 
+  // No more fetch code everywhere! It has it's own place!
   async makeRequest(url) {
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }
     })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const contentType = response.headers.get('content-type')
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Response is not JSON')
+    }
+
     return await response.json()
   }
 
@@ -137,9 +149,22 @@ export default class extends Controller {
       const response = await fetch('/articles/sidebar_counts', {
         method: 'GET',
         headers: {
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         }
       })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('Sidebar counts response is not JSON')
+        return
+      }
+
       const data = await response.json()
       
       // Update "All Categories" count (first m-category)

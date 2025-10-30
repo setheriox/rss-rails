@@ -96,65 +96,65 @@ class ArticlesController < ApplicationController
   # Toggle read/unread status for an article via AJAX / Stimulus?
   def toggle_read
     @article = Article.find(params[:id])
-    
+
     if @article.read == true
       @article.read = false
     else
       @article.read = true
     end
-    
+
     if @article.save
-      render json: { 
-        success: true, 
-        read: @article.read 
-      }
+      render json: {
+        success: true,
+        read: @article.read
+      }, content_type: 'application/json'
     else
-      render json: { 
-        success: false, 
-        errors: @article.errors.full_messages 
-      }
+      render json: {
+        success: false,
+        errors: @article.errors.full_messages
+      }, content_type: 'application/json'
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { 
-      success: false, 
-      errors: ['Article not found'] 
-    }, status: :not_found
+    render json: {
+      success: false,
+      errors: ['Article not found']
+    }, status: :not_found, content_type: 'application/json'
   end
 
 
   # Toggle read/unread status for an article via AJAX / Stimulus?
   def toggle_starred
     @article = Article.find(params[:id])
-    
+
     if @article.starred == true
       @article.starred = false
     else
       @article.starred = true
     end
-    
+
     if @article.save
-      render json: { 
-        success: true, 
-        starred: @article.starred 
-      }
+      render json: {
+        success: true,
+        starred: @article.starred
+      }, content_type: 'application/json'
     else
-      render json: { 
-        success: false, 
-        errors: @article.errors.full_messages 
-      }
+      render json: {
+        success: false,
+        errors: @article.errors.full_messages
+      }, content_type: 'application/json'
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { 
-      success: false, 
-      errors: ['Article not found'] 
-    }, status: :not_found
+    render json: {
+      success: false,
+      errors: ['Article not found']
+    }, status: :not_found, content_type: 'application/json'
   end
 
   # AJAX endpoint to get updated sidebar counts
   def sidebar_counts
     categories = ordered_categories_with_counts
     total_unread = Article.where(read: false, filtered: false).count
-    
+
     counts = {
       total_unread: total_unread,
       categories: categories.map do |category|
@@ -170,8 +170,8 @@ class ArticlesController < ApplicationController
         }
       end
     }
-    
-    render json: counts
+
+    render json: counts, content_type: 'application/json'
   end
 
   # Button to mark all (unread) items as read

@@ -23,5 +23,16 @@ module Rss
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Reverse proxy configuration
+    config.action_controller.default_url_options = { host: ENV['APP_HOST'] || 'localhost' }
+    config.action_controller.asset_host = ENV['ASSET_HOST'] if ENV['ASSET_HOST'].present?
+
+    # Trust proxy headers
+    config.action_dispatch.trusted_proxies = ActionDispatch::RemoteIp::TRUSTED_PROXIES + [
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16"
+    ]
   end
 end
